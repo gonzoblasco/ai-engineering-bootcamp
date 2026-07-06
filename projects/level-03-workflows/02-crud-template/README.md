@@ -2,24 +2,44 @@
 
 > **Nivel:** 3 — Workflows estructurados 🟡
 > **Dificultad:** Intermedio
-> **Documentación:** [level-03-workflows.md](../../../docs/level-03-workflows.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-03-workflows.md](../../../docs/level-03-workflows.md)
 
-## Descripción
+## 📌 Estado
 
-Crea un template de prompt que genere CRUDs consistentes para cualquier entidad.
+🚧 **Pendiente de implementación**
 
-## Pasos
+## 📝 Descripción
 
-1. Diseña un prompt template con placeholders: `{{ENTITY_NAME}}`, `{{FIELDS}}`, `{{RELATIONS}}`
-2. Úsalo para generar un CRUD de "Products"
-3. Úsalo para generar un CRUD de "Users"
-4. Verifica que la estructura y calidad sea consistente
-5. Guarda el template en `docs/templates/crud-template.md`
+<!-- Qué es y qué hace el proyecto una vez implementado -->
 
-## Criterios de completitud
+## 🛠️ Stack
 
-- [ ] Prompt template con placeholders funcionando
-- [ ] CRUD de Products generado y funcional
-- [ ] CRUD de Users generado y funcional
-- [ ] Estructura consistente entre ambos
-- [ ] Template guardado y documentado
+<!-- Tecnologías, frameworks, herramientas -->
+
+## 🚀 Cómo ejecutarlo
+
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
+```
+
+## ✨ Features
+
+<!-- Lista de funcionalidades implementadas -->
+
+- [ ] Feature 1
+- [ ] Feature 2
+
+## 📂 Estructura
+
+<!-- Estructura de carpetas del proyecto -->
+
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2

@@ -2,32 +2,44 @@
 
 > **Nivel:** 10 — Sistema completo end-to-end 👑
 > **Dificultad:** Dios
-> **Documentación:** [level-10-dios.md](../../../docs/level-10-dios.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-10-dios.md](../../../docs/level-10-dios.md)
 
-## Descripción
+## 📌 Estado
 
-Documenta TODO lo que construiste como portfolio presentable.
+🚧 **Pendiente de implementación**
 
-## Estructura
+## 📝 Descripción
 
+<!-- Qué es y qué hace el proyecto una vez implementado -->
+
+## 🛠️ Stack
+
+<!-- Tecnologías, frameworks, herramientas -->
+
+## 🚀 Cómo ejecutarlo
+
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
 ```
-portfolio/
-├── README.md                    ← Overview + impacto
-├── prompt-library/              ← Tu biblioteca de prompts
-├── workflows/                   ← Workflows documentados
-├── recipes/                     ← Recipes reutilizables
-├── checklists/                   ← Checklists de auditoría
-├── templates/                   ← Templates de prompts
-├── metrics/                     ← Métricas de productividad
-├── workshop/                    ← Material del workshop
-├── case-study-ecommerce.md      ← Case study del proyecto final
-└── presentation.md              ← Pitch para entrevista
-```
 
-## Criterios de completitud
+## ✨ Features
 
-- [ ] Portfolio completo y organizado
-- [ ] Case study del e-commerce con métricas
-- [ ] Pitch de 5 minutos para entrevista
-- [ ] Demo runnable (Docker Compose up)
-- [ ] Todo documentado y presentable
+<!-- Lista de funcionalidades implementadas -->
+
+- [ ] Feature 1
+- [ ] Feature 2
+
+## 📂 Estructura
+
+<!-- Estructura de carpetas del proyecto -->
+
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2

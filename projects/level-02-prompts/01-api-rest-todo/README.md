@@ -2,42 +2,44 @@
 
 > **Nivel:** 2 — Prompts que funcionan 🟢
 > **Dificultad:** Principiante-Intermedio
-> **Documentación:** [level-02-prompts.md](../../../docs/level-02-prompts.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-02-prompts.md](../../../docs/level-02-prompts.md)
 
-## Descripción
+## 📌 Estado
 
-Construye una API REST completa usando SOLO prompts. Sin escribir código manualmente.
+🚧 **Pendiente de implementación**
 
-## Prompt inicial sugerido
+## 📝 Descripción
 
+<!-- Qué es y qué hace el proyecto una vez implementado -->
+
+## 🛠️ Stack
+
+<!-- Tecnologías, frameworks, herramientas -->
+
+## 🚀 Cómo ejecutarlo
+
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
 ```
-Actúa como un ingeniero senior de Node.js.
-Crea una API REST para un To-Do list con Express.js.
 
-Requisitos:
-- Endpoints: GET /tasks, GET /tasks/:id, POST /tasks, PUT /tasks/:id, DELETE /tasks/:id
-- Validación de input con express-validator
-- Manejo de errores centralizado con middleware
-- Estructura: routes/, controllers/, models/, middleware/
-- Usa ES modules (import/export)
-- Incluye un archivo .env para configuración
-- Código production-ready con comentarios explicativos
+## ✨ Features
 
-Genera todos los archivos necesarios.
-```
+<!-- Lista de funcionalidades implementadas -->
 
-## Pasos
+- [ ] Feature 1
+- [ ] Feature 2
 
-1. Usa el prompt anterior en Copilot Chat con `@workspace`
-2. Crea los archivos según las sugerencias
-3. Instala dependencias y ejecuta
-4. Pide tests: *"Genera tests con Jest para cada endpoint"*
-5. Pide mejoras: *"Añade paginación y filtering al GET /tasks"*
+## 📂 Estructura
 
-## Criterios de completitud
+<!-- Estructura de carpetas del proyecto -->
 
-- [ ] API funciona con todos los endpoints
-- [ ] Validación de input implementada
-- [ ] Manejo de errores centralizado
-- [ ] Tests con Jest pasando
-- [ ] Documentaste qué prompts usaste
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2

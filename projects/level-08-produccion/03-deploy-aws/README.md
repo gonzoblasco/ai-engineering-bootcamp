@@ -2,24 +2,44 @@
 
 > **Nivel:** 8 — Escalabilidad, performance, seguridad 🔴
 > **Dificultad:** Avanzado
-> **Documentación:** [level-08-produccion.md](../../../docs/level-08-produccion.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-08-produccion.md](../../../docs/level-08-produccion.md)
 
-## Descripción
+## 📌 Estado
 
-Despliega un servicio en AWS usando Infrastructure as Code generado con IA.
+🚧 **Pendiente de implementación**
 
-## Pasos
+## 📝 Descripción
 
-1. Pídele a Copilot: *"Genera un template de Terraform para desplegar un servicio Node.js en AWS ECS Fargate con ALB, RDS PostgreSQL, y Redis ElastiCache"*
-2. Revisa y ajusta el template
-3. Despliega (o simula el deploy con `terraform plan`)
-4. Configura CI/CD para auto-deploy
-5. Documenta la infraestructura
+<!-- Qué es y qué hace el proyecto una vez implementado -->
 
-## Criterios de completitud
+## 🛠️ Stack
 
-- [ ] Terraform template generado y revisado
-- [ ] `terraform plan` funciona sin errores
-- [ ] Diagrama de infraestructura documentado
-- [ ] CI/CD para deploy configurado
-- [ ] Variables y secrets management en AWS
+<!-- Tecnologías, frameworks, herramientas -->
+
+## 🚀 Cómo ejecutarlo
+
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
+```
+
+## ✨ Features
+
+<!-- Lista de funcionalidades implementadas -->
+
+- [ ] Feature 1
+- [ ] Feature 2
+
+## 📂 Estructura
+
+<!-- Estructura de carpetas del proyecto -->
+
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2

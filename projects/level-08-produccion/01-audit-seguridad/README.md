@@ -2,24 +2,44 @@
 
 > **Nivel:** 8 — Escalabilidad, performance, seguridad 🔴
 > **Dificultad:** Avanzado
-> **Documentación:** [level-08-produccion.md](../../../docs/level-08-produccion.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-08-produccion.md](../../../docs/level-08-produccion.md)
 
-## Descripción
+## 📌 Estado
 
-Toma un servicio del Nivel 7 y haz un security audit completo.
+🚧 **Pendiente de implementación**
 
-## Pasos
+## 📝 Descripción
 
-1. Selecciona el Auth Service
-2. Pídele a Copilot: *"Haz un security audit completo de este servicio. Revisa: OWASP Top 10, secrets management, JWT implementation, input validation, SQL injection, rate limiting, CORS"*
-3. Documenta todas las vulnerabilidades encontradas
-4. Pide a Copilot que las corrija una por una
-5. Verifica las correcciones con tests
+<!-- Qué es y qué hace el proyecto una vez implementado -->
 
-## Criterios de completitud
+## 🛠️ Stack
 
-- [ ] Audit documentado con todas las vulnerabilidades
-- [ ] Vulnerabilidades críticas corregidas
-- [ ] Tests de seguridad (ej: supertest con payloads maliciosos)
-- [ ] Rate limiting implementado
-- [ ] Secrets management con variables de entorno
+<!-- Tecnologías, frameworks, herramientas -->
+
+## 🚀 Cómo ejecutarlo
+
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
+```
+
+## ✨ Features
+
+<!-- Lista de funcionalidades implementadas -->
+
+- [ ] Feature 1
+- [ ] Feature 2
+
+## 📂 Estructura
+
+<!-- Estructura de carpetas del proyecto -->
+
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2

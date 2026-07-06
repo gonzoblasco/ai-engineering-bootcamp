@@ -2,32 +2,44 @@
 
 > **Nivel:** 9 — Multiplicador de equipo 🔴
 > **Dificultad:** Experto
-> **Documentación:** [level-09-multiplicador.md](../../../docs/level-09-multiplicador.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-09-multiplicador.md](../../../docs/level-09-multiplicador.md)
 
-## Descripción
+## 📌 Estado
 
-Define KPIs para medir el impacto de IA en el equipo.
+🚧 **Pendiente de implementación**
 
-## Métricas a definir
+## 📝 Descripción
 
-- Velocity (story points/sprint) antes vs después de IA
-- Code quality (bugs por release, test coverage)
-- Time to onboard new engineers
-- PR review time
-- Defect escape rate
+<!-- Qué es y qué hace el proyecto una vez implementado -->
 
-## Pasos
+## 🛠️ Stack
 
-1. Diseña el dashboard de métricas
-2. Crea un script que recolecte datos de GitHub (PRs, issues, commits)
-3. Genera visualizaciones
-4. Documenta cómo interpretar las métricas
-5. Define benchmarks de "what good looks like"
+<!-- Tecnologías, frameworks, herramientas -->
 
-## Criterios de completitud
+## 🚀 Cómo ejecutarlo
 
-- [ ] 5+ KPIs definidos
-- [ ] Script de recolección funcional
-- [ ] Dashboard o reporte generado
-- [ ] Documentación de interpretación
-- [ ] Benchmarks definidos
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
+```
+
+## ✨ Features
+
+<!-- Lista de funcionalidades implementadas -->
+
+- [ ] Feature 1
+- [ ] Feature 2
+
+## 📂 Estructura
+
+<!-- Estructura de carpetas del proyecto -->
+
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2

@@ -2,39 +2,44 @@
 
 > **Nivel:** 5 — Auditoría de código IA 🟠
 > **Dificultad:** Intermedio-Avanzado
-> **Documentación:** [level-05-auditoria.md](../../../docs/level-05-auditoria.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-05-auditoria.md](../../../docs/level-05-auditoria.md)
 
-## Descripción
+## 📌 Estado
 
-Crea un checklist de revisión de código IA y un script que automatice parte de la validación.
+🚧 **Pendiente de implementación**
 
-## Checklist a crear
+## 📝 Descripción
 
+<!-- Qué es y qué hace el proyecto una vez implementado -->
+
+## 🛠️ Stack
+
+<!-- Tecnologías, frameworks, herramientas -->
+
+## 🚀 Cómo ejecutarlo
+
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
 ```
-docs/checklists/
-├── ai-code-audit-checklist.md
-├── security-checklist.md
-└── performance-checklist.md
-```
 
-## Categorías del checklist
+## ✨ Features
 
-1. **Seguridad:** SQL injection, XSS, CSRF, secrets en código, input validation
-2. **Performance:** N+1 queries, memory leaks, blocking calls, missing indexes
-3. **Edge cases:** null/undefined, empty arrays, concurrent access, rate limiting
-4. **Calidad:** Naming, DRY, SOLID, error handling, logging
-5. **Tests:** Cobertura, edge cases testeados, mocks apropiados
+<!-- Lista de funcionalidades implementadas -->
 
-## Script de validación
+- [ ] Feature 1
+- [ ] Feature 2
 
-Crea un script Node.js que:
-- Analice un archivo/directorio
-- Detecte patrones comunes de problemas (regex-based)
-- Genere un reporte
+## 📂 Estructura
 
-## Criterios de completitud
+<!-- Estructura de carpetas del proyecto -->
 
-- [ ] 3 checklists creados y documentados
-- [ ] Script de validación funcional
-- [ ] Script genera reporte legible
-- [ ] Probado sobre código del Nivel 3
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2

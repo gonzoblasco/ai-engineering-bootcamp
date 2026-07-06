@@ -2,64 +2,44 @@
 
 > **Nivel:** 4 — Plantillas y automatización 🟡
 > **Dificultad:** Intermedio
-> **Documentación:** [level-04-prompt-library.md](../../../docs/level-04-prompt-library.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-04-prompt-library.md](../../../docs/level-04-prompt-library.md)
 
-## Descripción
+## 📌 Estado
 
-Colección organizada de prompts categorizados y reutilizables.
+🚧 **Pendiente de implementación**
 
-## Estructura
+## 📝 Descripción
 
-```
-prompts/
-├── backend/
-│   ├── create-api-endpoint.md
-│   ├── create-middleware.md
-│   ├── database-schema-design.md
-│   └── error-handling-pattern.md
-├── frontend/
-│   ├── create-react-component.md
-│   ├── responsive-layout.md
-│   └── form-validation.md
-├── testing/
-│   ├── unit-test-template.md
-│   ├── integration-test-template.md
-│   └── e2e-test-template.md
-├── refactoring/
-│   ├── extract-function.md
-│   ├── apply-design-pattern.md
-│   └── simplify-logic.md
-├── security/
-│   ├── security-audit.md
-│   ├── input-validation-review.md
-│   └── dependency-check.md
-└── README.md
+<!-- Qué es y qué hace el proyecto una vez implementado -->
+
+## 🛠️ Stack
+
+<!-- Tecnologías, frameworks, herramientas -->
+
+## 🚀 Cómo ejecutarlo
+
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
 ```
 
-## Formato de cada prompt
+## ✨ Features
 
-```markdown
-# [Nombre del prompt]
+<!-- Lista de funcionalidades implementadas -->
 
-## Categoría
-[backend/frontend/testing/refactoring/security]
+- [ ] Feature 1
+- [ ] Feature 2
 
-## Cuándo usarlo
-[Descripción del escenario]
+## 📂 Estructura
 
-## Prompt
-[El prompt con placeholders {{LIKE_THIS}}]
+<!-- Estructura de carpetas del proyecto -->
 
-## Ejemplo de uso
-[Input de ejemplo → Output esperado]
+## ✅ Criterios de completitud
 
-## Notas
-[Consideraciones, limitaciones]
-```
+<!-- Copiar de TASK.md e ir marcando -->
 
-## Criterios de completitud
-
-- [ ] Al menos 15 prompts categorizados
-- [ ] Formato estandarizado
-- [ ] Cada prompt tiene ejemplo de uso
-- [ ] README con índice
+- [ ] Criterio 1
+- [ ] Criterio 2

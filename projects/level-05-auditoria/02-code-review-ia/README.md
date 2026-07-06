@@ -2,24 +2,44 @@
 
 > **Nivel:** 5 — Auditoría de código IA 🟠
 > **Dificultad:** Intermedio-Avanzado
-> **Documentación:** [level-05-auditoria.md](../../../docs/level-05-auditoria.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-05-auditoria.md](../../../docs/level-05-auditoria.md)
 
-## Descripción
+## 📌 Estado
 
-Usa Copilot para que revise su propio código y compara con revisión manual.
+🚧 **Pendiente de implementación**
 
-## Pasos
+## 📝 Descripción
 
-1. Toma el sistema de auth del Nivel 3
-2. Pídele a Copilot: *"Revisa este código como un senior engineer. Busca bugs, security issues, performance problems y mejoras de arquitectura"*
-3. Documenta los hallazgos de Copilot
-4. Haz una revisión manual del mismo código
-5. Compara: ¿Qué encontró Copilot? ¿Qué encontraste tú? ¿Qué se perdió?
-6. Documenta las diferencias en `docs/ai-vs-human-review.md`
+<!-- Qué es y qué hace el proyecto una vez implementado -->
 
-## Criterios de completitud
+## 🛠️ Stack
 
-- [ ] Review con IA documentado
-- [ ] Review manual documentado
-- [ ] Comparación crítica escrita
-- [ ] Conclusiones sobre cuándo confiar en IA vs revisión humana
+<!-- Tecnologías, frameworks, herramientas -->
+
+## 🚀 Cómo ejecutarlo
+
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
+```
+
+## ✨ Features
+
+<!-- Lista de funcionalidades implementadas -->
+
+- [ ] Feature 1
+- [ ] Feature 2
+
+## 📂 Estructura
+
+<!-- Estructura de carpetas del proyecto -->
+
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2

@@ -2,42 +2,44 @@
 
 > **Nivel:** 7 — Microservicios con IA 🔴
 > **Dificultad:** Avanzado
-> **Documentación:** [level-07-microservicios.md](../../../docs/level-07-microservicios.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-07-microservicios.md](../../../docs/level-07-microservicios.md)
 
-## Descripción
+## 📌 Estado
 
-API Gateway + Auth Service + Product Service + Order Service.
+🚧 **Pendiente de implementación**
 
-## Arquitectura
+## 📝 Descripción
 
+<!-- Qué es y qué hace el proyecto una vez implementado -->
+
+## 🛠️ Stack
+
+<!-- Tecnologías, frameworks, herramientas -->
+
+## 🚀 Cómo ejecutarlo
+
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
 ```
-                    ┌──────────────┐
-                    │  API Gateway  │
-                    └──────┬───────┘
-                           │
-              ┌────────────┼────────────┐
-              │            │            │
-     ┌────────┴───┐ ┌─────┴────┐ ┌─────┴─────┐
-     │ Auth Service│ │Product Svc│ │Order Svc  │
-     └────────────┘ └──────────┘ └───────────┘
-              │            │            │
-         ┌────┴────┐  ┌────┴────┐  ┌────┴────┐
-         │PostgreSQL│  │PostgreSQL│  │ MongoDB  │
-         └─────────┘  └─────────┘  └─────────┘
-```
 
-## Pasos
+## ✨ Features
 
-1. Pídele a Copilot: *"Diseña una arquitectura de microservicios para un e-commerce con API Gateway, Auth, Products y Orders. Incluye diagrama, tech stack y justificación"*
-2. Implementa cada servicio con Copilot
-3. Configura el API Gateway (Express http-proxy o similar)
-4. Implementa service discovery (puede ser simple con env vars)
-5. Documenta cada decisión en ADRs (Architecture Decision Records)
+<!-- Lista de funcionalidades implementadas -->
 
-## Criterios de completitud
+- [ ] Feature 1
+- [ ] Feature 2
 
-- [ ] 3+ microservicios funcionando
-- [ ] API Gateway enruta correctamente
-- [ ] Cada servicio tiene su propia DB
-- [ ] ADRs documentados
-- [ ] Docker Compose para levantar todo
+## 📂 Estructura
+
+<!-- Estructura de carpetas del proyecto -->
+
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2

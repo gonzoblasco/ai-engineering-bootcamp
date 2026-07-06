@@ -2,25 +2,44 @@
 
 > **Nivel:** 4 — Plantillas y automatización 🟡
 > **Dificultad:** Intermedio
-> **Documentación:** [level-04-prompt-library.md](../../../docs/level-04-prompt-library.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-04-prompt-library.md](../../../docs/level-04-prompt-library.md)
 
-## Descripción
+## 📌 Estado
 
-Crea reglas de proyecto que hagan que Copilot genere código con tus convenciones.
+🚧 **Pendiente de implementación**
 
-## Contenido a incluir
+## 📝 Descripción
 
-- Stack tecnológico (Node.js, Express, TypeScript, Jest, etc.)
-- Convenciones de naming (camelCase, PascalCase)
-- Estructura de carpetas obligatoria
-- Patrones a seguir (Repository pattern, Dependency Injection)
-- Patrones a evitar
-- Reglas de seguridad (no `eval`, no `innerHTML`, sanitizar inputs)
-- Reglas de testing (cobertura mínima, qué testear)
-- Formato de commits
+<!-- Qué es y qué hace el proyecto una vez implementado -->
 
-## Criterios de completitud
+## 🛠️ Stack
 
-- [ ] Archivo `.github/copilot-instructions.md` creado
-- [ ] Copilot genera código siguiendo las convenciones
-- [ ] Probaste que las reglas funcionan con 3 prompts diferentes
+<!-- Tecnologías, frameworks, herramientas -->
+
+## 🚀 Cómo ejecutarlo
+
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
+```
+
+## ✨ Features
+
+<!-- Lista de funcionalidades implementadas -->
+
+- [ ] Feature 1
+- [ ] Feature 2
+
+## 📂 Estructura
+
+<!-- Estructura de carpetas del proyecto -->
+
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2

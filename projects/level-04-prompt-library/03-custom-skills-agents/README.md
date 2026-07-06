@@ -2,27 +2,44 @@
 
 > **Nivel:** 4 — Plantillas y automatización 🟡
 > **Dificultad:** Intermedio
-> **Documentación:** [level-04-prompt-library.md](../../../docs/level-04-prompt-library.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-04-prompt-library.md](../../../docs/level-04-prompt-library.md)
 
-## Descripción
+## 📌 Estado
 
-Define agentes personalizados en VS Code para tareas repetitivas.
+🚧 **Pendiente de implementación**
 
-## Agentes a crear
+## 📝 Descripción
 
-1. **Code Reviewer** — Revisa código buscando bugs, security issues, y mejoras
-2. **Test Generator** — Genera tests a partir de un archivo de código
-3. **Doc Writer** — Genera JSDoc/README a partir del código
+<!-- Qué es y qué hace el proyecto una vez implementado -->
 
-## Pasos
+## 🛠️ Stack
 
-1. Crea archivos `.instructions.md` o usa el skill system de VS Code
-2. Define el rol, instrucciones, y restricciones de cada agente
-3. Prueba cada agente con código real
-4. Documenta cómo invocarlos
+<!-- Tecnologías, frameworks, herramientas -->
 
-## Criterios de completitud
+## 🚀 Cómo ejecutarlo
 
-- [ ] 3 agentes personalizados definidos
-- [ ] Cada agente funciona como se espera
-- [ ] Documentación de uso creada
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
+```
+
+## ✨ Features
+
+<!-- Lista de funcionalidades implementadas -->
+
+- [ ] Feature 1
+- [ ] Feature 2
+
+## 📂 Estructura
+
+<!-- Estructura de carpetas del proyecto -->
+
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2

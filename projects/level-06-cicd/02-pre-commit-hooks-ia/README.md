@@ -2,22 +2,44 @@
 
 > **Nivel:** 6 — CI/CD con IA 🟠
 > **Dificultad:** Avanzado
-> **Documentación:** [level-06-cicd.md](../../../docs/level-06-cicd.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-06-cicd.md](../../../docs/level-06-cicd.md)
 
-## Descripción
+## 📌 Estado
 
-Hook que valide código antes de cada commit usando IA.
+🚧 **Pendiente de implementación**
 
-## Pasos
+## 📝 Descripción
 
-1. Configura `husky` + `lint-staged`
-2. Crea un script que use Copilot CLI o un endpoint de IA para validar archivos staged
-3. El hook debe: revisar seguridad, detectar bugs obvios, verificar convenciones
-4. Si hay problemas críticos, bloquea el commit
+<!-- Qué es y qué hace el proyecto una vez implementado -->
 
-## Criterios de completitud
+## 🛠️ Stack
 
-- [ ] Pre-commit hook instalado y funcionando
-- [ ] Valida código con IA antes de commit
-- [ ] Bloquea commits con problemas críticos
-- [ ] Documentación de cómo funciona
+<!-- Tecnologías, frameworks, herramientas -->
+
+## 🚀 Cómo ejecutarlo
+
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
+```
+
+## ✨ Features
+
+<!-- Lista de funcionalidades implementadas -->
+
+- [ ] Feature 1
+- [ ] Feature 2
+
+## 📂 Estructura
+
+<!-- Estructura de carpetas del proyecto -->
+
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2

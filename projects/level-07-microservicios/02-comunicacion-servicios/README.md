@@ -2,23 +2,44 @@
 
 > **Nivel:** 7 — Microservicios con IA 🔴
 > **Dificultad:** Avanzado
-> **Documentación:** [level-07-microservicios.md](../../../docs/level-07-microservicios.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-07-microservicios.md](../../../docs/level-07-microservicios.md)
 
-## Descripción
+## 📌 Estado
 
-Implementa comunicación event-driven entre servicios.
+🚧 **Pendiente de implementación**
 
-## Pasos
+## 📝 Descripción
 
-1. Añade RabbitMQ o Redis pub-sub
-2. Cuando se crea una orden → evento → Product Service actualiza stock
-3. Cuando stock baja → evento → notification service alerta
-4. Usa Copilot para diseñar el sistema de eventos
-5. Implementa retry y dead letter queue
+<!-- Qué es y qué hace el proyecto una vez implementado -->
 
-## Criterios de completitud
+## 🛠️ Stack
 
-- [ ] Comunicación event-driven funcionando
-- [ ] Retry y dead letter queue implementados
-- [ ] Eventos documentados
-- [ ] Tests de integración entre servicios
+<!-- Tecnologías, frameworks, herramientas -->
+
+## 🚀 Cómo ejecutarlo
+
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
+```
+
+## ✨ Features
+
+<!-- Lista de funcionalidades implementadas -->
+
+- [ ] Feature 1
+- [ ] Feature 2
+
+## 📂 Estructura
+
+<!-- Estructura de carpetas del proyecto -->
+
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2

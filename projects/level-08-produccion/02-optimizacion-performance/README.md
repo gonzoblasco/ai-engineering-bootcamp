@@ -2,23 +2,44 @@
 
 > **Nivel:** 8 — Escalabilidad, performance, seguridad 🔴
 > **Dificultad:** Avanzado
-> **Documentación:** [level-08-produccion.md](../../../docs/level-08-produccion.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-08-produccion.md](../../../docs/level-08-produccion.md)
 
-## Descripción
+## 📌 Estado
 
-Identifica y resuelve bottlenecks de performance.
+🚧 **Pendiente de implementación**
 
-## Pasos
+## 📝 Descripción
 
-1. Pídele a Copilot: *"Analiza este código y identifica bottlenecks de performance. Sugiere optimizaciones con justificación"*
-2. Implementa: caching (Redis), connection pooling, query optimization
-3. Crea un script de benchmarking antes/después
-4. Documenta las mejoras con métricas
+<!-- Qué es y qué hace el proyecto una vez implementado -->
 
-## Criterios de completitud
+## 🛠️ Stack
 
-- [ ] Bottlenecks identificados
-- [ ] Caching implementado (Redis)
-- [ ] Connection pooling configurado
-- [ ] Benchmark antes/después documentado
-- [ ] Mejora medible (>30% en algún endpoint)
+<!-- Tecnologías, frameworks, herramientas -->
+
+## 🚀 Cómo ejecutarlo
+
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
+```
+
+## ✨ Features
+
+<!-- Lista de funcionalidades implementadas -->
+
+- [ ] Feature 1
+- [ ] Feature 2
+
+## 📂 Estructura
+
+<!-- Estructura de carpetas del proyecto -->
+
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2

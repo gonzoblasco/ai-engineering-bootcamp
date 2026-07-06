@@ -2,44 +2,44 @@
 
 > **Nivel:** 6 — CI/CD con IA 🟠
 > **Dificultad:** Avanzado
-> **Documentación:** [level-06-cicd.md](../../../docs/level-06-cicd.md)
+> **Instrucciones:** [`TASK.md`](./TASK.md) · **Docs del nivel:** [level-06-cicd.md](../../../docs/level-06-cicd.md)
 
-## Descripción
+## 📌 Estado
 
-Pipeline que genera tests con IA, corre linter, ejecuta tests y reporta.
+🚧 **Pendiente de implementación**
 
-## Workflow a crear
+## 📝 Descripción
 
-```yaml
-# .github/workflows/ai-pipeline.yml
-name: AI-Driven CI Pipeline
+<!-- Qué es y qué hace el proyecto una vez implementado -->
 
-on: [push, pull_request]
+## 🛠️ Stack
 
-jobs:
-  lint:
-    # ESLint + Prettier
-  ai-test-generation:
-    # Generar tests faltantes con IA
-  test:
-    # Ejecutar todos los tests
-  ai-code-review:
-    # Copilot revisa el PR
-  report:
-    # Consolidar resultados
+<!-- Tecnologías, frameworks, herramientas -->
+
+## 🚀 Cómo ejecutarlo
+
+<!-- Prerrequisitos, instalación, comandos -->
+
+```bash
+# Ejemplo
+npm install
+npm run dev
 ```
 
-## Pasos
+## ✨ Features
 
-1. Crea el workflow con Copilot: *"Genera un GitHub Actions workflow que corra ESLint, genere tests faltantes, ejecute tests y haga code review con IA"*
-2. Implementa cada job
-3. Prueba el pipeline con un PR real
-4. Itera y mejora
+<!-- Lista de funcionalidades implementadas -->
 
-## Criterios de completitud
+- [ ] Feature 1
+- [ ] Feature 2
 
-- [ ] Workflow funcional en GitHub Actions
-- [ ] Job de linting funciona
-- [ ] Job de test generation con IA
-- [ ] Job de code review con IA
-- [ ] Reporte consolidado
+## 📂 Estructura
+
+<!-- Estructura de carpetas del proyecto -->
+
+## ✅ Criterios de completitud
+
+<!-- Copiar de TASK.md e ir marcando -->
+
+- [ ] Criterio 1
+- [ ] Criterio 2
