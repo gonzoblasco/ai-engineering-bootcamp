@@ -3,16 +3,16 @@
  */
 
 // Uso de var (advertencia)
-var myVariable = 'Hello';
+var myVariable = "Hello";
 
 // Uso de console.log (advertencia)
-console.log('This is a console log');
+console.log("This is a console log");
 
 // Uso de eval (problema crítico)
 eval('alert("Hello")');
 
 // Password hardcodeado (problema crítico)
-const password = 'mysecretpassword';
+const password = "mysecretpassword";
 
 // TODO sin resolver (advertencia)
 // TODO: Implementar esta función
@@ -22,6 +22,6 @@ function myFunction() {
   if (myVariable == null) {
     return false;
   }
-  
+
   return true;
 }
