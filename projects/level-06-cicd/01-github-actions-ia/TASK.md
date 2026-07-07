@@ -42,8 +42,8 @@ jobs:
 
 ## Criterios de completitud
 
-- [ ] Workflow funcional en GitHub Actions
-- [ ] Job de linting funciona
-- [ ] Job de test generation con IA
-- [ ] Job de code review con IA
-- [ ] Reporte consolidado
+- [x] Workflow funcional en GitHub Actions
+- [x] Job de linting funciona
+- [x] Job de test generation con IA
+- [x] Job de code review con IA
+- [x] Reporte consolidado
