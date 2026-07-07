@@ -6,40 +6,59 @@
 
 ## 📌 Estado
 
-🚧 **Pendiente de implementación**
+✅ **Completado**
 
 ## 📝 Descripción
 
-<!-- Qué es y qué hace el proyecto una vez implementado -->
+3 skills globales de VS Code que funcionan en cualquier workspace. Se invocan desde Copilot Chat con `/code-reviewer`, `/test-generator` y `/doc-writer`, o automáticamente cuando Copilot detecta el contexto adecuado.
 
 ## 🛠️ Stack
 
-<!-- Tecnologías, frameworks, herramientas -->
+- VS Code Copilot Skills system
+- Markdown + YAML frontmatter
+- Compatible con Node.js / Express / Jest projects
 
-## 🚀 Cómo ejecutarlo
+## 🚀 Cómo usarlo
 
-<!-- Prerrequisitos, instalación, comandos -->
+Los skills viven en `~/.agents/skills/` (user-level, globales). No requieren instalación — VS Code los detecta automáticamente.
 
-```bash
-# Ejemplo
-npm install
-npm run dev
+### Invocación
+
+| Skill | Slash command | Trigger automático |
+|---|---|---|
+| Code Reviewer | `/code-reviewer` | "review this code", "audit", "find bugs" |
+| Test Generator | `/test-generator` | "generate tests", "write tests", "add coverage" |
+| Doc Writer | `/doc-writer` | "document this", "add JSDoc", "generate README" |
+
+### Ejemplo
+
+```
+# En Copilot Chat:
+/code-reviewer src/middleware/auth.js
+/test-generator src/models/taskModel.js
+/doc-writer src/controllers/userController.js
 ```
 
 ## ✨ Features
 
-<!-- Lista de funcionalidades implementadas -->
-
-- [ ] Feature 1
-- [ ] Feature 2
+- ✅ **Code Reviewer** — analiza bugs, seguridad, performance, arquitectura y testing gaps. Output en tabla markdown con severity.
+- ✅ **Test Generator** — genera tests Jest + Supertest completos con happy path, edge cases y error cases. Respeta convenciones ESM.
+- ✅ **Doc Writer** — genera JSDoc inline, secciones de README y tablas de endpoints API. Documentación en español.
 
 ## 📂 Estructura
 
-<!-- Estructura de carpetas del proyecto -->
+```
+~/.agents/skills/
+├── code-reviewer/
+│   └── SKILL.md
+├── test-generator/
+│   └── SKILL.md
+└── doc-writer/
+    └── SKILL.md
+```
 
 ## ✅ Criterios de completitud
 
-<!-- Copiar de TASK.md e ir marcando -->
-
-- [ ] Criterio 1
-- [ ] Criterio 2
+- [x] 3 agentes personalizados definidos
+- [x] Cada agente funciona como se espera
+- [x] Documentación de uso creada
