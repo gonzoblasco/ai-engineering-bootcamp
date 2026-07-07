@@ -23,7 +23,7 @@ Usa Copilot para que revise su propio código y compara con revisión manual.
 
 ## Criterios de completitud
 
-- [ ] Review con IA documentado
-- [ ] Review manual documentado
-- [ ] Comparación crítica escrita
-- [ ] Conclusiones sobre cuándo confiar en IA vs revisión humana
+- [x] Review con IA documentado
+- [x] Review manual documentado
+- [x] Comparación crítica escrita
+- [x] Conclusiones sobre cuándo confiar en IA vs revisión humana

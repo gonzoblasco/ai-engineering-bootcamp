@@ -6,32 +6,43 @@
 
 ## 📌 Estado
 
-🚧 **Pendiente de implementación**
+✅ **Completado**
 
 ## 📝 Descripción
 
-<!-- Qué es y qué hace el proyecto una vez implementado -->
+Este proyecto consiste en una comparación entre una revisión de código realizada por IA (GitHub Copilot) y una revisión manual del sistema de autenticación JWT del Nivel 3.1. El objetivo es identificar las fortalezas y debilidades de cada enfoque de revisión y determinar cuándo es más apropiado confiar en cada uno.
 
 ## 🛠️ Stack
 
-<!-- Tecnologías, frameworks, herramientas -->
+- Node.js
+- Express.js
+- Prisma
+- SQLite
+- bcrypt
+- jsonwebtoken
 
 ## 🚀 Cómo ejecutarlo
 
-<!-- Prerrequisitos, instalación, comandos -->
+Este proyecto no requiere ejecución ya que es un análisis de código. Sin embargo, si quisieras revisar el código del sistema de autenticación que fue analizado, podrías:
 
 ```bash
-# Ejemplo
+# Ir al directorio del sistema de autenticación del Nivel 3
+cd ../../level-03-workflows/01-sistema-auth-jwt
+
+# Instalar dependencias
 npm install
+
+# Ejecutar la aplicación
 npm run dev
 ```
 
 ## ✨ Features
 
-<!-- Lista de funcionalidades implementadas -->
-
-- [ ] Feature 1
-- [ ] Feature 2
+- [x] Revisión de código con IA (GitHub Copilot)
+- [x] Revisión de código manual
+- [x] Comparación crítica entre ambos enfoques
+- [x] Documentación de hallazgos en `docs/ai-vs-human-review.md`
+- [x] Conclusiones sobre cuándo confiar en IA vs revisión humana
 
 ## 📂 Estructura
 
