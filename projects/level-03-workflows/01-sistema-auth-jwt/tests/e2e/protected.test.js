@@ -1,5 +1,7 @@
 import request from 'supertest';
+import jwt from 'jsonwebtoken';
 import { app } from './setup.js';
+import { config } from '../../src/config/index.js';
 
 describe('Rutas protegidas y roles', () => {
   let userToken;
@@ -77,5 +79,34 @@ describe('Rutas protegidas y roles', () => {
 
     expect(res.status).toBe(201);
     expect(res.body.data.role).toBe('admin');
+  });
+
+  it('acepta token con scheme "bearer" en minúscula (RFC 6750)', async () => {
+    const res = await request(app)
+      .get('/api/users/me')
+      .set('Authorization', `bearer ${userToken}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.email).toBe('user@example.com');
+  });
+
+  it('acepta token con scheme "BEARER" en mayúscula (RFC 6750)', async () => {
+    const res = await request(app)
+      .get('/api/users/me')
+      .set('Authorization', `BEARER ${userToken}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.email).toBe('user@example.com');
+  });
+
+  it('rechaza token malformado sin sub con 401 (no 500)', async () => {
+    // JWT firmado con el secret correcto pero sin claim sub en el payload
+    const malformedToken = jwt.sign({}, config.jwt.secret);
+
+    const res = await request(app)
+      .get('/api/users/me')
+      .set('Authorization', `Bearer ${malformedToken}`);
+
+    expect(res.status).toBe(401);
   });
 });
