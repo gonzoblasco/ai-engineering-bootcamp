@@ -6,40 +6,45 @@
 
 ## 📌 Estado
 
-🚧 **Pendiente de implementación**
+✅ **Completado**
 
 ## 📝 Descripción
 
-<!-- Qué es y qué hace el proyecto una vez implementado -->
+Archivo `.github/copilot-instructions.md` en la raíz del repo que define las convenciones de código que Copilot debe seguir al generar código para este workspace. Cubre stack, naming, estructura de carpetas, patrones, seguridad, testing y formato de commits.
 
 ## 🛠️ Stack
 
-<!-- Tecnologías, frameworks, herramientas -->
+- Node.js (ESM)
+- Express.js
+- Jest + Supertest
+- Prisma (cuando aplica)
 
-## 🚀 Cómo ejecutarlo
+## 🚀 Cómo usarlo
 
-<!-- Prerrequisitos, instalación, comandos -->
+El archivo `.github/copilot-instructions.md` es detectado automáticamente por GitHub Copilot en VS Code. No requiere instalación ni comandos — Copilot lo lee al iniciar sesión en el workspace.
 
-```bash
-# Ejemplo
-npm install
-npm run dev
-```
+Para verificar que está activo, abrir el archivo en VS Code y confirmar que Copilot Chat lo reconoce como instrucciones de proyecto.
 
 ## ✨ Features
 
-<!-- Lista de funcionalidades implementadas -->
-
-- [ ] Feature 1
-- [ ] Feature 2
+- ✅ Stack tecnológico definido (Node.js + Express + ESM)
+- ✅ Convenciones de naming (camelCase, PascalCase, UPPER_SNAKE_CASE)
+- ✅ Estructura de carpetas obligatoria (`src/{app.js, server.js, controllers/, ...}`)
+- ✅ Patrones a seguir (separación por capas, error handling centralizado, health check)
+- ✅ Patrones a evitar (no `require()`, no `app.listen()` en `app.js`, no `var`)
+- ✅ Reglas de seguridad (no `eval`, no `innerHTML`, sanitizar inputs, bcrypt)
+- ✅ Reglas de testing (Jest + Supertest, 80% cobertura, `*.test.js`)
+- ✅ Formato de commits (Conventional Commits en español)
 
 ## 📂 Estructura
 
-<!-- Estructura de carpetas del proyecto -->
+```
+.github/
+  copilot-instructions.md   # ← este archivo
+```
 
 ## ✅ Criterios de completitud
 
-<!-- Copiar de TASK.md e ir marcando -->
-
-- [ ] Criterio 1
-- [ ] Criterio 2
+- [x] Archivo `.github/copilot-instructions.md` creado
+- [x] Copilot genera código siguiendo las convenciones
+- [x] Probaste que las reglas funcionan con 3 prompts diferentes
