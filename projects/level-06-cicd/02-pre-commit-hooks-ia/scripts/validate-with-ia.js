@@ -75,7 +75,12 @@ const WARNING_PATTERNS = [
  * Lee el contenido de un archivo y devuelve su texto.
  *
  * @param {string} filePath Ruta del archivo a leer.
- * @returns {Promise<string>} Contenido del archivo.
+ * @returns {Promise<string>} Contenido del archivo en texto plano.
+ * @throws {Error} Si el archivo no existe o no se puede leer.
+ *
+ * @example
+ * const content = await readFileContent('./src/app.js')
+ * console.log(content) // 'import express from "express"...'
  */
 export async function readFileContent(filePath) {
   try {
@@ -88,9 +93,16 @@ export async function readFileContent(filePath) {
 /**
  * Encuentra el número de línea asociado a una posición en el texto.
  *
+ * Recorre las líneas acumulando su longitud hasta encontrar la línea
+ * que contiene el índice dado.
+ *
  * @param {string[]} lines Líneas del contenido.
- * @param {number} index Posición del texto.
- * @returns {number} Número de línea.
+ * @param {number} index Posición del texto (0-based).
+ * @returns {number} Número de línea (1-based).
+ *
+ * @example
+ * const lines = ['const x = 1', 'const y = 2']
+ * findLineNumber(lines, 15) // => 2
  */
 export function findLineNumber(lines, index) {
   let consumed = 0
@@ -110,9 +122,20 @@ export function findLineNumber(lines, index) {
 /**
  * Analiza el contenido de un archivo usando patrones regex (fallback).
  *
- * @param {string} filePath Ruta del archivo.
- * @param {string} content Contenido del archivo.
- * @returns {Array<{severity: string, category: string, message: string, line: number}>} Lista de problemas.
+ * Se usa cuando no hay `AI_API_KEY` configurada o cuando la IA no encuentra
+ * problemas. Aplica patrones predefinidos para detectar eval, passwords
+ * hardcodeados, uso de var, console.log, TODOs, etc.
+ *
+ * @param {string} filePath Ruta del archivo (solo informativo, no se usa en el análisis).
+ * @param {string} content Contenido del archivo a analizar.
+ * @returns {Array<{severity: string, category: string, message: string, line: number}>} Lista de problemas encontrados.
+ *
+ * @example
+ * const issues = analyzeWithRegex('app.js', 'var x = 1; console.log(x)')
+ * // => [
+ * //   { severity: 'warning', category: 'convenciones', message: 'Se encontró uso de var...', line: 1 },
+ * //   { severity: 'warning', category: 'bugs', message: 'Se encontró console.log...', line: 1 }
+ * // ]
  */
 export function analyzeWithRegex(filePath, content) {
   const issues = []
@@ -141,9 +164,22 @@ export function analyzeWithRegex(filePath, content) {
  * Analiza el contenido de un archivo. Usa IA si hay API key configurada,
  * o patrones regex como fallback.
  *
- * @param {string} filePath Ruta del archivo.
+ * Estrategia:
+ * 1. Si `AI_API_KEY` está configurada → llama a `analyzeWithAI()`
+ * 2. Si la IA encuentra problemas → los retorna directamente
+ * 3. Si la IA no encuentra nada o no hay API key → usa `analyzeWithRegex()`
+ *
+ * @param {string} filePath Ruta del archivo a analizar.
  * @param {string} content Contenido del archivo.
- * @returns {Promise<Array<{severity: string, category: string, message: string, line: number}>>} Lista de problemas.
+ * @returns {Promise<Array<{severity: string, category: string, message: string, line: number}>>} Lista de problemas detectados.
+ *
+ * @example
+ * // Con AI_API_KEY configurada, usa la IA
+ * const issues = await analyzeFileContent('src/app.js', 'eval("xss")')
+ *
+ * @example
+ * // Sin AI_API_KEY, usa regex como fallback
+ * const issues = await analyzeFileContent('src/app.js', 'var x = 1')
  */
 export async function analyzeFileContent(filePath, content) {
   if (AI_API_KEY) {
@@ -159,8 +195,17 @@ export async function analyzeFileContent(filePath, content) {
 /**
  * Ejecuta la validación para una lista de archivos.
  *
- * @param {string[]} files Lista de rutas de archivos.
- * @returns {Promise<{blocked: boolean, findings: Array<{filePath: string, issues: Array}>}>}
+ * Lee cada archivo, lo analiza con IA o regex, y determina si el commit
+ * debe bloquearse (algún issue con severity === 'critical').
+ *
+ * @param {string[]} files Lista de rutas de archivos a validar.
+ * @returns {Promise<{blocked: boolean, findings: Array<{filePath: string, issues: Array}>}>} Resultado de la validación.
+ *
+ * @example
+ * const { blocked, findings } = await validateFiles(['src/app.js', 'src/utils.js'])
+ * if (blocked) {
+ *   console.error('Commit bloqueado por problemas críticos')
+ * }
  */
 export async function validateFiles(files) {
   const findings = []
@@ -181,8 +226,21 @@ export async function validateFiles(files) {
 /**
  * Punto de entrada del script.
  *
- * @param {string[]} argv Argumentos de la línea de comandos.
- * @returns {Promise<number>} Código de salida del proceso.
+ * Recibe rutas de archivos como argumentos, los valida y muestra un reporte
+ * en consola. Retorna 0 si el commit puede continuar, 1 si debe bloquearse.
+ *
+ * @param {string[]} argv Argumentos de la línea de comandos (rutas de archivos).
+ * @returns {Promise<number>} Código de salida: 0 = ok, 1 = bloqueado.
+ *
+ * @example
+ * // Uso desde terminal
+ * // node scripts/validate-with-ia.js src/app.js src/utils.js
+ *
+ * @example
+ * // Uso programático
+ * import { main } from './scripts/validate-with-ia.js'
+ * const exitCode = await main(['src/app.js'])
+ * process.exit(exitCode)
  */
 export async function main(argv = process.argv.slice(2)) {
   const files = argv.filter(Boolean).map((file) => path.resolve(file))

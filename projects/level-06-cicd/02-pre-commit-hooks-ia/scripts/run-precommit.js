@@ -12,11 +12,21 @@ const projectRoot = path.resolve(__dirname, '..')
 /**
  * Ejecuta un comando de forma controlada y devuelve su resultado.
  *
- * @param {string} command Comando a ejecutar.
+ * Envuelve `child_process.spawn` en una promesa, capturando stdout y stderr.
+ * Si el proceso termina con exitCode !== 0, rechaza la promesa.
+ *
+ * @param {string} command Comando a ejecutar (ej: 'git', 'npx').
  * @param {string[]} [args=[]] Argumentos del comando.
  * @param {string} [cwd=projectRoot] Directorio de trabajo.
  * @param {'inherit' | 'pipe'} [stdio='pipe'] Modo de salida del proceso.
+ *   - `'pipe'`: captura stdout/stderr y los devuelve en la promesa.
+ *   - `'inherit'`: muestra la salida directamente en la terminal.
  * @returns {Promise<{stdout: string, stderr: string, exitCode: number}>} Resultado del comando.
+ * @throws {Error} Si el proceso termina con exitCode !== 0 o si falla al iniciarse.
+ *
+ * @example
+ * const { stdout } = await runProcess('git', ['diff', '--cached', '--name-only'])
+ * const files = stdout.trim().split('\n')
  */
 export async function runProcess(command, args = [], cwd = projectRoot, stdio = 'pipe') {
   return new Promise((resolve, reject) => {
@@ -59,8 +69,16 @@ export async function runProcess(command, args = [], cwd = projectRoot, stdio = 
 /**
  * Obtiene la lista de archivos staged en Git.
  *
+ * Ejecuta `git diff --cached --name-only --diff-filter=ACMR` para obtener
+ * solo los archivos añadidos, copiados, modificados o renombrados.
+ *
  * @param {string} [cwd=projectRoot] Directorio del proyecto.
- * @returns {Promise<string[]>} Archivos staged.
+ * @returns {Promise<string[]>} Lista de rutas relativas de archivos staged.
+ * @throws {Error} Si el comando git falla.
+ *
+ * @example
+ * const files = await getStagedFiles()
+ * // => ['src/app.js', 'README.md']
  */
 export async function getStagedFiles(cwd = projectRoot) {
   const { stdout, exitCode } = await runProcess(
@@ -82,8 +100,18 @@ export async function getStagedFiles(cwd = projectRoot) {
 /**
  * Ejecuta lint-staged sobre los archivos staged.
  *
+ * Usa `npx lint-staged` con las opciones:
+ * - `--no-install`: no instala dependencias faltantes
+ * - `--concurrent false`: ejecuta las tareas secuencialmente
+ * - `--allow-empty`: no falla si no hay archivos que procesar
+ *
  * @param {string} [cwd=projectRoot] Directorio del proyecto.
  * @returns {Promise<void>} Promesa que resuelve cuando finaliza la ejecución.
+ * @throws {Error} Si lint-staged falla por un motivo distinto a "not found".
+ *
+ * @example
+ * await runLintStaged()
+ * // 🧹 Ejecutando lint-staged sobre los archivos staged...
  */
 export async function runLintStaged(cwd = projectRoot) {
   console.log('🧹 Ejecutando lint-staged sobre los archivos staged...')
@@ -110,9 +138,17 @@ export async function runLintStaged(cwd = projectRoot) {
 /**
  * Coordina la ejecución del script de validación con IA para los archivos entregados.
  *
+ * Busca el script en `AI_VALIDATION_SCRIPT` (variable de entorno) o en
+ * `scripts/validate-with-ia.js` por defecto. Si el script no existe, omite
+ * esta etapa sin error.
+ *
  * @param {string[]} files Archivos a validar.
  * @param {string} [cwd=projectRoot] Directorio del proyecto.
  * @returns {Promise<void>} Promesa que resuelve cuando finaliza la validación.
+ *
+ * @example
+ * await runValidationWithAi(['src/app.js', 'src/utils.js'])
+ * // 🤖 Ejecutando validación con IA...
  */
 export async function runValidationWithAi(files, cwd = projectRoot) {
   const aiScriptPath =
@@ -130,7 +166,18 @@ export async function runValidationWithAi(files, cwd = projectRoot) {
 /**
  * Punto de entrada del hook de pre-commit.
  *
+ * Flujo completo:
+ * 1. Obtiene los archivos staged con `git diff --cached`
+ * 2. Si no hay archivos, termina sin error
+ * 3. Ejecuta lint-staged (Prettier + validación IA)
+ * 4. Ejecuta validación adicional con IA sobre todos los archivos staged
+ *
  * @returns {Promise<void>} Promesa que resuelve cuando finaliza el flujo.
+ *
+ * @example
+ * // Ejecutado automáticamente por .husky/pre-commit
+ * // node scripts/run-precommit.js
+ * await main()
  */
 export async function main() {
   const stagedFiles = await getStagedFiles(projectRoot)

@@ -26,9 +26,24 @@ No incluyas explicaciones adicionales, SOLO el JSON.`
 /**
  * Analiza el contenido de un archivo usando IA.
  *
+ * Envía el código a una API compatible con OpenAI (OpenAI, Anthropic, Groq, etc.)
+ * y recibe un array JSON con los problemas detectados. Si no hay `AI_API_KEY`
+ * configurada, retorna un array vacío para que el llamador use el fallback regex.
+ *
  * @param {string} filePath - Ruta del archivo a analizar.
  * @param {string} content - Contenido del archivo.
- * @returns {Promise<Array<{severity: string, category: string, message: string, line: number}>>} Lista de problemas encontrados.
+ * @returns {Promise<Array<{severity: string, category: string, message: string, line: number}>>} Lista de problemas encontrados por la IA.
+ * @throws {Error} Si la API responde con un código de error HTTP.
+ *
+ * @example
+ * // Con API key configurada en .env
+ * const issues = await analyzeWithAI('src/app.js', 'eval("alert(1)")')
+ * // => [{ severity: 'critical', category: 'seguridad', message: 'Uso de eval detectado', line: 1 }]
+ *
+ * @example
+ * // Sin API key — retorna array vacío, se usará fallback regex
+ * const issues = await analyzeWithAI('src/app.js', 'console.log("hola")')
+ * // => []
  */
 export async function analyzeWithAI(filePath, content) {
   if (!AI_API_KEY) {

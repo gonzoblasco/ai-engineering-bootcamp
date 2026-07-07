@@ -9,6 +9,11 @@
         "git commit": true,
         "git reset": true,
         "git rm": true,
-        "npm install": true
+        "npm install": true,
+        "mv": true,
+        "/^node -e \"import\\('\\./src/config/env\\.js'\\)\\.then\\(m => console\\.log\\('OK:', Object\\.keys\\(m\\)\\)\\)\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
     }
 }
