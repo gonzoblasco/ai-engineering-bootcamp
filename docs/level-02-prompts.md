@@ -1,84 +1,67 @@
-# Nivel 2 — Prompts que funcionan 🟢
+# Level 2 — Prompts That Work 🟡
 
-> **Objetivo:** Aprender prompt engineering aplicado a código. La base de TODO el puesto.
+> **Goal:** Master prompt engineering for code generation. Learn to write prompts that produce correct, maintainable code on the first try.
 >
-> **Dificultad:** Principiante-Intermedio | **Proyectos:** 2 | **Tiempo estimado:** 3-4 horas
+> **Difficulty:** Beginner | **Projects:** 2 | **Estimated time:** 2-3 hours
 
-## Skills que ganarás
+## Skills you'll gain
 
-- [ ] Prompt estructurado (rol + contexto + tarea + restricciones)
-- [ ] Few-shot prompting (dar ejemplos)
-- [ ] Chain-of-thought para código
-- [ ] Pedir explicaciones paso a paso
-- [ ] Referenciar archivos con `#file`
-
----
-
-## Proyecto 1: API REST de To-Do list (Node.js + Express)
-
-**Descripción:** Construye una API REST completa usando SOLO prompts. Sin escribir código manualmente.
-
-### Prompt inicial sugerido
-
-```
-Actúa como un ingeniero senior de Node.js.
-Crea una API REST para un To-Do list con Express.js.
-
-Requisitos:
-- Endpoints: GET /tasks, GET /tasks/:id, POST /tasks, PUT /tasks/:id, DELETE /tasks/:id
-- Validación de input con express-validator
-- Manejo de errores centralizado con middleware
-- Estructura: routes/, controllers/, models/, middleware/
-- Usa ES modules (import/export)
-- Incluye un archivo .env para configuración
-- Código production-ready con comentarios explicativos
-
-Genera todos los archivos necesarios.
-```
-
-### Pasos
-
-1. Usa el prompt anterior en Copilot Chat con `@workspace`
-2. Crea los archivos según las sugerencias
-3. Instala dependencias y ejecuta
-4. Pide tests: *"Genera tests con Jest para cada endpoint"*
-5. Pide mejoras: *"Añade paginación y filtering al GET /tasks"*
-
-### Criterios de completitud
-
-- [ ] API funciona con todos los endpoints
-- [ ] Validación de input implementada
-- [ ] Manejo de errores centralizado
-- [ ] Tests con Jest pasando
-- [ ] Documentaste qué prompts usaste
+- [ ] Write specific, contextual prompts
+- [ ] Use system prompts and constraints
+- [ ] Chain prompts for complex tasks
+- [ ] Iterate with targeted corrections
+- [ ] Use `@workspace` and `#file` effectively
 
 ---
 
-## Proyecto 2: Refactor de código legacy
+## Project 1: REST API — Todo list
 
-**Descripción:** Toma un proyecto intencionalmente mal escrito y refactóralo con Copilot.
+**Description:** Build a complete REST API for a todo list using Express.js, with Copilot generating most of the code.
 
-### Pasos
+### Steps
 
-1. Crea un archivo `legacy.js` con código feo (te lo proveeré en el nivel)
-2. Pídele a Copilot: *"Analiza este código y explica los problemas que ves"*
-3. Luego: *"Refactoriza aplicando SOLID, clean code, y patrones apropiados. Explica cada cambio"*
-4. Pide: *"Genera tests para el código refactorizado"*
-5. Compara antes y después
+1. Initialize the project: `npm init -y` and install `express`
+2. In Copilot Chat, ask: *"Create a REST API for a todo list with Express.js. Include CRUD endpoints, in-memory storage, and proper error handling."*
+3. Review the generated code — ask for explanations of patterns you don't understand
+4. Add validation: *"Add input validation for the todo creation endpoint. Title is required, max 200 chars."*
+5. Add tests: *"Create integration tests with Supertest for all endpoints."*
 
-### Criterios de completitud
+### Completion criteria
 
-- [ ] Copilot identificó los problemas del código original
-- [ ] Refactor aplicó principios SOLID
-- [ ] Tests cubren el código refactorizado
-- [ ] Documentaste el proceso de refactor como un "recipe"
+- [ ] All CRUD endpoints work (GET, POST, PUT, DELETE)
+- [ ] Input validation is implemented
+- [ ] Tests pass
+- [ ] You asked for at least 2 code explanations
+
+---
+
+## Project 2: Refactor legacy code
+
+**Description:** Take a poorly written codebase and refactor it using Copilot.
+
+### Steps
+
+1. Open `projects/level-02-prompts/02-refactor-legacy/` — there's a messy Express app
+2. Ask Copilot: *"Analyze this code and identify the main issues: code duplication, error handling, and naming."*
+3. Refactor step by step, asking Copilot for each improvement
+4. Ask: *"Extract the validation logic into a middleware."*
+5. Ask: *"Add centralized error handling."*
+
+### Completion criteria
+
+- [ ] You identified at least 3 code issues before refactoring
+- [ ] Validation is extracted to middleware
+- [ ] Error handling is centralized
+- [ ] The refactored code is cleaner (ask Copilot to compare)
 
 ---
 
 ## Self-review
 
-- ¿Estructuras tus prompts con rol, contexto, tarea y restricciones?
-- ¿Das ejemplos cuando necesitas un formato específico?
-- ¿Pides explicaciones antes de aceptar código?
+Before advancing to Level 3, answer:
 
-→ Si respondiste "sí" a todo, avanza al **Nivel 3**.
+- Can you write a prompt that produces working code on the first try?
+- Do you know how to use `@workspace` to give Copilot full project context?
+- Can you chain prompts to build complex features incrementally?
+
+→ If you answered "yes" to all, advance to **Level 3**.

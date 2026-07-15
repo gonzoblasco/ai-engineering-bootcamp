@@ -1,80 +1,65 @@
-# Nivel 3 — Workflows estructurados 🟡
+# Level 3 — Structured Workflows 🟠
 
-> **Objetivo:** Diseñar workflows repetibles. Esto es lo que Trafilea pide explícitamente.
+> **Goal:** Design and implement structured AI workflows. Move from one-off prompts to repeatable, auditable processes.
 >
-> **Dificultad:** Intermedio | **Proyectos:** 2 | **Tiempo estimado:** 4-5 horas
+> **Difficulty:** Intermediate | **Projects:** 2 | **Estimated time:** 3-4 hours
 
-## Skills que ganarás
+## Skills you'll gain
 
-- [ ] Diseñar workflows paso a paso
-- [ ] Documentar procesos como "recipes"
-- [ ] Crear prompts como templates reutilizables
-- [ ] Spec → prompt → código → test → review
-
----
-
-## Proyecto 1: Sistema de autenticación completo (JWT)
-
-**Descripción:** Diseña el workflow completo para crear un sistema de auth y documéntalo como un recipe reutilizable.
-
-### Workflow a seguir
-
-```
-1. SPEC: Define requisitos en lenguaje natural
-2. PROMPT: Convierte spec en prompt estructurado
-3. CODE: Genera código con Copilot
-4. TEST: Pide tests automáticamente
-5. REVIEW: Pide a Copilot que audite su propio código
-6. DOC: Genera documentación de la API
-```
-
-### Pasos
-
-1. Escribe un spec: "Sistema de auth con registro, login, refresh token, middleware de auth, roles"
-2. Convierte el spec en un prompt estructurado
-3. Genera el código con Copilot
-4. Pide tests con Jest + Supertest
-5. Pide a Copilot que revise seguridad del código generado
-6. Pide que genere documentación OpenAPI/Swagger
-7. **Documenta todo el proceso** en `docs/recipes/auth-system.md`
-
-### Criterios de completitud
-
-- [ ] Sistema de auth funcional con JWT
-- [ ] Refresh token implementado
-- [ ] Middleware de roles
-- [ ] Tests E2E con Supertest
-- [ ] Documentación Swagger generada
-- [ ] Recipe documentado en `docs/recipes/`
+- [ ] Design AI workflows with gates and checkpoints
+- [ ] Use Agent mode for multi-step tasks
+- [ ] Create reusable prompt templates
+- [ ] Implement Pre-Flight checks before coding
+- [ ] Use the 5 Gates methodology
 
 ---
 
-## Proyecto 2: CRUD con validación y manejo de errores (template)
+## Project 1: Workflow automation script
 
-**Descripción:** Crea un template de prompt que genere CRUDs consistentes para cualquier entidad.
+**Description:** Create a Node.js CLI tool that automates a development workflow (e.g., creating a new feature branch, running tests, building, and creating a PR).
 
-### Pasos
+### Steps
 
-1. Diseña un prompt template con placeholders: `{{ENTITY_NAME}}`, `{{FIELDS}}`, `{{RELATIONS}}`
-2. Úsalo para generar un CRUD de "Products"
-3. Úsalo para generar un CRUD de "Users"
-4. Verifica que la estructura y calidad sea consistente
-5. Guarda el template en `docs/templates/crud-template.md`
+1. Ask Copilot: *"Create a Node.js CLI tool that automates the workflow: create branch → run tests → build → create PR. Use Commander.js for CLI args."*
+2. Add a "Pre-Flight" check: *"Add a pre-flight check that verifies the user is on main, has no uncommitted changes, and has the latest pull."*
+3. Add gates: *"Add a build gate — if the build fails, stop and report the error before creating the PR."*
+4. Add a report: *"Generate a markdown report of the workflow execution."*
 
-### Criterios de completitud
+### Completion criteria
 
-- [ ] Prompt template con placeholders funcionando
-- [ ] CRUD de Products generado y funcional
-- [ ] CRUD de Users generado y funcional
-- [ ] Estructura consistente entre ambos
-- [ ] Template guardado y documentado
+- [ ] CLI tool works end-to-end
+- [ ] Pre-flight check runs before any action
+- [ ] Build gate blocks PR creation on failure
+- [ ] Report is generated
+
+---
+
+## Project 2: AI code review system
+
+**Description:** Build a system that uses Copilot to review code changes against project conventions.
+
+### Steps
+
+1. Ask Copilot: *"Create a Node.js script that reads a git diff, sends it to Copilot for review, and generates a structured report."*
+2. Define review dimensions: *"Add review categories: correctness, security, conventions, performance."*
+3. Add blocking rules: *"If the review finds hardcoded secrets or missing auth guards, mark as BLOCKING."*
+4. Generate output: *"Format the review as a markdown report with ✅, 🔴, 🟡 sections."*
+
+### Completion criteria
+
+- [ ] Script reads git diff
+- [ ] Review covers all 4 dimensions
+- [ ] Blocking rules work
+- [ ] Report is well-formatted markdown
 
 ---
 
 ## Self-review
 
-- ¿Puedes replicar el workflow de auth para otro sistema sin empezar de cero?
-- ¿Tu template de CRUD produce código consistente?
-- ¿Documentaste los workflows de forma que otro engineer podría seguirlos?
+Before advancing to Level 4, answer:
 
-→ Si respondiste "sí" a todo, avanza al **Nivel 4**.
+- Can you design a workflow with gates and checkpoints?
+- Do you understand when to use Agent mode vs individual prompts?
+- Can you create reusable prompt templates?
+
+→ If you answered "yes" to all, advance to **Level 4**.

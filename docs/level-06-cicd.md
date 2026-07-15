@@ -1,84 +1,65 @@
-# Nivel 6 — CI/CD con IA 🟠
+# Level 6 — CI/CD with AI 🔵
 
-> **Objetivo:** Integrar outputs de IA en pipelines de CI/CD, testing y linting.
+> **Goal:** Integrate AI into your CI/CD pipeline. Automate code review, security audit, and PR management with AI agents.
 >
-> **Dificultad:** Avanzado | **Proyectos:** 2 | **Tiempo estimado:** 4-6 horas
+> **Difficulty:** Intermediate | **Projects:** 2 | **Estimated time:** 3-4 hours
 
-## Skills que ganarás
+## Skills you'll gain
 
-- [ ] GitHub Actions workflows
-- [ ] Pre-commit hooks con IA
-- [ ] Automatización de testing con IA
-- [ ] Integrar IA en pipelines existentes
-
----
-
-## Proyecto 1: GitHub Actions workflow con IA
-
-**Descripción:** Pipeline que genera tests con IA, corre linter, ejecuta tests y reporta.
-
-### Workflow a crear
-
-```yaml
-# .github/workflows/ai-pipeline.yml
-name: AI-Driven CI Pipeline
-
-on: [push, pull_request]
-
-jobs:
-  lint:
-    # ESLint + Prettier
-  ai-test-generation:
-    # Generar tests faltantes con IA
-  test:
-    # Ejecutar todos los tests
-  ai-code-review:
-    # Copilot revisa el PR
-  report:
-    # Consolidar resultados
-```
-
-### Pasos
-
-1. Crea el workflow con Copilot: *"Genera un GitHub Actions workflow que corra ESLint, genere tests faltantes, ejecute tests y haga code review con IA"*
-2. Implementa cada job
-3. Prueba el pipeline con un PR real
-4. Itera y mejora
-
-### Criterios de completitud
-
-- [ ] Workflow funcional en GitHub Actions
-- [ ] Job de linting funciona
-- [ ] Job de test generation con IA
-- [ ] Job de code review con IA
-- [ ] Reporte consolidado
+- [ ] Set up AI-powered CI/CD pipelines
+- [ ] Automate code review in GitHub Actions
+- [ ] Automate security audit in CI
+- [ ] Create PR templates with AI checks
+- [ ] Use AI for release notes generation
 
 ---
 
-## Proyecto 2: Pre-commit hooks con IA
+## Project 1: AI-powered GitHub Action
 
-**Descripción:** Hook que valide código antes de cada commit usando IA.
+**Description:** Create a GitHub Action that runs an AI code review on every PR.
 
-### Pasos
+### Steps
 
-1. Configura `husky` + `lint-staged`
-2. Crea un script que use Copilot CLI o un endpoint de IA para validar archivos staged
-3. El hook debe: revisar seguridad, detectar bugs obvios, verificar convenciones
-4. Si hay problemas críticos, bloquea el commit
+1. Ask Copilot: *"Create a GitHub Action workflow that runs on pull requests. It should: check out code, install dependencies, run lint, run tests, and post a comment with the results."*
+2. Add AI review: *"Add a step that uses the code review prompt from Level 4 to analyze the PR diff and post the review as a PR comment."*
+3. Add security audit: *"Add a security audit step using the tool from Level 5. If CRITICAL findings exist, fail the check."*
+4. Add auto-labeling: *"Add auto-labeling based on the review: 'security:critical', 'needs-review', 'ready-to-merge'."*
 
-### Criterios de completitud
+### Completion criteria
 
-- [ ] Pre-commit hook instalado y funcionando
-- [ ] Valida código con IA antes de commit
-- [ ] Bloquea commits con problemas críticos
-- [ ] Documentación de cómo funciona
+- [ ] Workflow runs on every PR
+- [ ] AI review is posted as a comment
+- [ ] Security audit blocks on CRITICAL findings
+- [ ] Auto-labeling works
+
+---
+
+## Project 2: Automated release notes
+
+**Description:** Create a GitHub Action that generates release notes from commit history using AI.
+
+### Steps
+
+1. Ask Copilot: *"Create a GitHub Action that runs when a release is published. It should: fetch commits since the last tag, group them by type (feat, fix, chore), and generate release notes."*
+2. Add AI summarization: *"Add a step that uses AI to summarize each group of commits into a concise bullet point."*
+3. Add version bump: *"Automatically determine the version bump (major, minor, patch) based on commit types."*
+4. Post to release: *"Post the generated release notes to the GitHub Release page."*
+
+### Completion criteria
+
+- [ ] Action runs on release publish
+- [ ] Commits are grouped by type
+- [ ] AI summaries are generated
+- [ ] Version bump is correct
 
 ---
 
 ## Self-review
 
-- ¿Tu pipeline de CI/CD integra IA de forma útil (no como gimmick)?
-- ¿El pre-commit hook añade valor sin ser demasiado lento?
-- ¿Entiendes cómo automatizar IA en pipelines?
+Before advancing to Level 7, answer:
 
-→ Si respondiste "sí" a todo, avanza al **Nivel 7**.
+- Can you create a GitHub Action that runs AI review on PRs?
+- Can you automate security audit in CI?
+- Can you generate release notes from commit history?
+
+→ If you answered "yes" to all, advance to **Level 7**.

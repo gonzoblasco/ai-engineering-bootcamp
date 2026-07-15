@@ -1,134 +1,85 @@
-# Nivel 4 — Plantillas y automatización 🟡
+# Level 4 — Prompt Library 🟠
 
-> **Objetivo:** Construir una prompt library reutilizable. Otro requisito directo del puesto.
+> **Goal:** Build and maintain a personal library of reusable prompts. Create templates for common tasks: code review, refactoring, documentation, testing.
 >
-> **Dificultad:** Intermedio | **Proyectos:** 3 | **Tiempo estimado:** 4-6 horas
+> **Difficulty:** Intermediate | **Projects:** 3 | **Estimated time:** 3-4 hours
 
-## Skills que ganarás
+## Skills you'll gain
 
-- [ ] Crear `.github/copilot-instructions.md` (equivalente a `.cursorrules`)
-- [ ] Diseñar prompt templates categorizados
-- [ ] Definir custom instructions a nivel proyecto
-- [ ] Crear custom Skills/Agents en VS Code
-
----
-
-## Proyecto 1: Prompt library (repo Git)
-
-**Descripción:** Colección organizada de prompts categorizados y reutilizables.
-
-### Estructura
-
-```
-prompts/
-├── backend/
-│   ├── create-api-endpoint.md
-│   ├── create-middleware.md
-│   ├── database-schema-design.md
-│   └── error-handling-pattern.md
-├── frontend/
-│   ├── create-react-component.md
-│   ├── responsive-layout.md
-│   └── form-validation.md
-├── testing/
-│   ├── unit-test-template.md
-│   ├── integration-test-template.md
-│   └── e2e-test-template.md
-├── refactoring/
-│   ├── extract-function.md
-│   ├── apply-design-pattern.md
-│   └── simplify-logic.md
-├── security/
-│   ├── security-audit.md
-│   ├── input-validation-review.md
-│   └── dependency-check.md
-└── README.md
-```
-
-### Formato de cada prompt
-
-```markdown
-# [Nombre del prompt]
-
-## Categoría
-[backend/frontend/testing/refactoring/security]
-
-## Cuándo usarlo
-[Descripción del escenario]
-
-## Prompt
-\```
-[El prompt con placeholders {{LIKE_THIS}}]
-\```
-
-## Ejemplo de uso
-[Input de ejemplo → Output esperado]
-
-## Notas
-[Consideraciones, limitaciones]
-```
-
-### Criterios de completitud
-
-- [ ] Al menos 15 prompts categorizados
-- [ ] Formato estandarizado
-- [ ] Cada prompt tiene ejemplo de uso
-- [ ] README con índice
+- [ ] Design reusable prompt templates
+- [ ] Create prompts with variables and placeholders
+- [ ] Build a prompt library structure
+- [ ] Version control your prompts
+- [ ] Share prompts with your team
 
 ---
 
-## Proyecto 2: `.github/copilot-instructions.md`
+## Project 1: Prompt template system
 
-**Descripción:** Crea reglas de proyecto que hagan que Copilot genere código con tus convenciones.
+**Description:** Create a system for storing, versioning, and using prompt templates.
 
-### Contenido a incluir
+### Steps
 
-- Stack tecnológico (Node.js, Express, TypeScript, Jest, etc.)
-- Convenciones de naming (camelCase, PascalCase)
-- Estructura de carpetas obligatoria
-- Patrones a seguir (Repository pattern, Dependency Injection)
-- Patrones a evitar
-- Reglas de seguridad (no `eval`, no `innerHTML`, sanitizar inputs)
-- Reglas de testing (cobertura mínima, qué testear)
-- Formato de commits
+1. Ask Copilot: *"Design a prompt template system. Each template is a markdown file with YAML frontmatter (name, description, variables). Create a CLI to list and use templates."*
+2. Create templates for: code review, refactoring, test generation, documentation
+3. Add variable substitution: *"Templates should support {{variable}} placeholders that get replaced at runtime."*
+4. Add a search command: *"Add a search command that finds templates by name or description."*
 
-### Criterios de completitud
+### Completion criteria
 
-- [ ] Archivo `.github/copilot-instructions.md` creado
-- [ ] Copilot genera código siguiendo las convenciones
-- [ ] Probaste que las reglas funcionan con 3 prompts diferentes
+- [ ] Template system works
+- [ ] At least 4 templates exist
+- [ ] Variable substitution works
+- [ ] Search works
 
 ---
 
-## Proyecto 3: Custom Skills/Agents
+## Project 2: Code review prompt
 
-**Descripción:** Define agentes personalizados en VS Code para tareas repetitivas.
+**Description:** Create a detailed code review prompt template.
 
-### Agentes a crear
+### Steps
 
-1. **Code Reviewer** — Revisa código buscando bugs, security issues, y mejoras
-2. **Test Generator** — Genera tests a partir de un archivo de código
-3. **Doc Writer** — Genera JSDoc/README a partir del código
+1. Ask Copilot: *"Create a code review prompt template that covers: correctness, security, conventions, performance, and test coverage."*
+2. Add severity levels: *"Add BLOCKING, WARNING, and SUGGESTION severity levels."*
+3. Add project-specific rules: *"Add a {{rules}} variable for project-specific conventions."*
+4. Test it: *"Use the template to review a real PR diff."*
 
-### Pasos
+### Completion criteria
 
-1. Crea archivos `.instructions.md` o usa el skill system de VS Code
-2. Define el rol, instrucciones, y restricciones de cada agente
-3. Prueba cada agente con código real
-4. Documenta cómo invocarlos
+- [ ] Template covers all 5 dimensions
+- [ ] Severity levels work
+- [ ] Variable substitution works
+- [ ] You tested it on a real diff
 
-### Criterios de completitud
+---
 
-- [ ] 3 agentes personalizados definidos
-- [ ] Cada agente funciona como se espera
-- [ ] Documentación de uso creada
+## Project 3: Refactoring prompt
+
+**Description:** Create a refactoring prompt template.
+
+### Steps
+
+1. Ask Copilot: *"Create a refactoring prompt template that identifies: code duplication, long functions, unclear names, dead imports."*
+2. Add constraints: *"The template should explicitly state: do NOT change behavior, do NOT add features."*
+3. Add output format: *"The template should produce a list of specific changes with file paths."*
+4. Test it: *"Use the template to refactor a messy file in this repo."*
+
+### Completion criteria
+
+- [ ] Template identifies all 4 patterns
+- [ ] Behavior preservation is explicit
+- [ ] Output is actionable
+- [ ] You tested it on real code
 
 ---
 
 ## Self-review
 
-- ¿Tu prompt library cubre los escenarios más comunes?
-- ¿Las custom instructions cambian el comportamiento de Copilot de forma notoria?
-- ¿Los agentes personalizados ahorran tiempo real?
+Before advancing to Level 5, answer:
 
-→ Si respondiste "sí" a todo, avanza al **Nivel 5**.
+- Can you design a reusable prompt template?
+- Do you have at least 4 templates in your library?
+- Can you share a template with a teammate?
+
+→ If you answered "yes" to all, advance to **Level 5**.
