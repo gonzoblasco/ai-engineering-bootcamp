@@ -33,9 +33,9 @@ Originally created to prepare for an **AI-Driven Engineering Specialist** role. 
 
 **Total: 23 hands-on projects**
 
-## Tool mapping
+## Tool agnostic
 
-This bootcamp uses **VS Code + GitHub Copilot** as the equivalent of Cursor/Claude Code. See [tool-mapping.md](docs/tool-mapping.md) for the complete comparison.
+This bootcamp is designed for VS Code + GitHub Copilot, but the methodology works with **any** AI coding agent. See [agent-agnostic-guide.md](docs/agent-agnostic-guide.md) for adapting to Claude Code, Codex, Cursor, or OpenClaw.
 
 ## Prerequisites
 
