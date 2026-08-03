@@ -118,8 +118,21 @@ Se materializaron los artefactos estructurales que las guías expandidas referen
 
 **Filosofía:** misma — profundidad antes que cantidad. El N6 no necesitaba más workflows; necesitaba *probar* que el gate bloquea lo malo y deja pasar lo bueno. Lleva el tema "un gate que no podés testear no es un gate" del N3 (local) al CI remoto.
 
+## Nivel 7 expandido ✅ (2026-08-03) — Microservicios
+
+**Nivel 7 expandido** — de 2 a 4 proyectos (núcleo físico convergente N7-N10, ADR-001):
+- Proyectos 1-2 (core, existentes): two-service system (users + notifications vía event bus) + event-driven (orders + retry + dashboard). El sistema ya estaba materializado de niveles previos.
+- **Proyecto 3 (nuevo, core, el corazón)** — *Prove the event flow*: `event-contract.js` declara el contrato de eventos como código (payload required + productores/consumidores), y `event-flow.test.js` prueba: entrega a todos los suscriptores, aislamiento de fallos (_safeCall), cumplimiento del contrato, y flujo real user.created → notifications.
+- **Proyecto 4 (nuevo, stretch)** — *Audit the boundaries*: cuestionar cada límite de servicio (¿cambian por razones distintas?), auditar el contrato, evaluar idempotencia, escribir `project-7-boundary-audit.md`.
+
+**Materialización:** `event-contract.js` (6 eventos reales del sistema: user.created/registered/deleted, order.created/updated/cancelled), `event-flow.test.js` (5 tests), `verify.js`. README actualizado.
+
+**Verificación:** verify.js del N7 creado (mismo template). **Pasa 15/15** (stretch no-bloqueante). Se probó de verdad: romper el `_safeCall` hace fallar el test de aislamiento (not ok) → el test detecta el defecto. Sistema completo N7-N10 corre end-to-end vía gateway (health agregado 4/4 ok, crear usuario ok).
+
+**Filosofía:** misma — profundidad antes que cantidad. El N7 no necesitaba más servicios; necesitaba *probar* que los eventos fluyen, que un handler roto no tumba el bus, y que los payloads cumplen el contrato. Los eventos son una API asíncrona — un contrato que nadie chequea se rompe en runtime, silenciosamente.
+
 ## Próximos pasos (si se retoma)
 
-- Expandir el siguiente nivel (N7 — arquitectura/microservicios) con la misma profundidad.
-- Aplicar el template de verificación (verify.js) a los niveles 7-10.
+- Expandir el siguiente nivel (N8 — cloud/producción) con la misma profundidad.
+- Aplicar el template de verificación (verify.js) a los niveles 8-10.
 - Posible conversión a contenido para posicionamiento (LinkedIn/tutorials).
