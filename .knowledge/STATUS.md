@@ -44,7 +44,7 @@
 - Los posts de LinkedIn de los niveles quedaron sin publicar (decisión: eran el ejercicio de reflexión, no el fin).
 - **⚠️ Detached HEAD recurrente en el repo del proyecto** (2026-08-03): al llegar, `main` estaba en `ee2cc7d` pero los commits nuevos se creaban desacoplados (HEAD en el aire). Se corrigió con `git branch -f main <sha> && git checkout main` (fast-forward lineal, sin pérdida). **Lección:** tras cada sesión, verificar `git status` para confirmar que se está en la branch y no en detached HEAD antes de commitear. El patrón se repetía porque los commits se hacían sin checkout previo de la branch.
 
-## Expansión en curso — Niveles 1-4 (2026-08-03)
+## Expansión en curso — Niveles 1-5 (2026-08-03)
 
 Convertir el bootcamp en una estructura de educación en línea completa, nivel por nivel.
 
@@ -77,8 +77,17 @@ Convertir el bootcamp en una estructura de educación en línea completa, nivel 
 
 **Filosofía:** misma — profundidad antes que cantidad. El N4 necesitaba ejercicios que enseñen a *evaluar* y *versionar* templates, no más templates.
 
+**Nivel 5 expandido ✅** — de 5 pasos a 5 pasos + 2 ejercicios:
+- Pasos 1-5 (core, existentes): Security Audit CLI (detectores secrets/injection/CVEs + ai-analyzer + CLI). Nivel ya tenía teoría fuerte del "primer filtro" (qué detecta la IA bien vs mal). Proyecto `security-cli/` ya resuelto.
+- **Ejercicio 6 (nuevo, core)** — *Exploit Lab*: escribir un exploit real contra tu propio código vulnerable, con predicción antes de correr, y confirmar que tu auditoría detecta lo mismo que el exploit. Enseña que "un detector que no coincide con un exploit real no está funcionando — el exploit es la prueba de fuego de tu auditoría". Lleva "don't trust, verify" al extremo: probás que la vulnerabilidad existe porque la explotás.
+- **Ejercicio 7 (nuevo, stretch)** — *Falso Positivo Hunt*: crear código inocente que engañe, cazar los falsos positivos, y ajustar el ai-analyzer para reducirlos sin romper la detección real. Enseña el problema #1 de la seguridad asistida por IA: la confianza falsa.
+
+**Mecanismo de verificación ✅** — verify.js del N5 creado (mismo template, adaptado: security-cli + detectores + exploit lab + falsos positivos). El patrón escala por quinto nivel.
+
+**Filosofía:** misma — profundidad antes que cantidad. El N5 ya tenía el "porqué" en la teoría; le faltaba el lado *ofensivo* (explotar) y el *problemático* (falsos positivos).
+
 ## Próximos pasos (si se retoma)
 
-- Aplicar el template de verificación (verify.js) a los niveles 5-10.
-- Expandir el siguiente nivel (N5 — Seguridad) con la misma profundidad.
+- Aplicar el template de verificación (verify.js) a los niveles 6-10.
+- Expandir el siguiente nivel (N6 — CI/CD) con la misma profundidad.
 - Posible conversión a contenido para posicionamiento (LinkedIn/tutorials).

@@ -2,7 +2,7 @@
 
 > **Meta:** Usar la IA como primer filtro de seguridad. Aprender qué detecta bien, qué no, y cómo construir un pipeline de auditoría automatizada.
 >
-> **Dificultad:** Intermedio-Avanzado | **Proyecto:** 5 | **Tiempo estimado:** 90-120 minutos
+> **Dificultad:** Intermedio-Avanzado | **Proyecto:** 7 (5 pasos core + 2 ejercicios) | **Tiempo estimado:** 2-3 horas
 
 ---
 
@@ -186,6 +186,68 @@ Prompt:
 
 ---
 
+## 🛠️ Ejercicio 6 — Exploit Lab 🔴 core
+
+> **Descripción:** Escribí un exploit real contra tu propio código vulnerable. Enseña a *entender* la vulnerabilidad atacándola, no solo detectándola.
+
+Un detector te dice *dónde* está el problema. Un exploit te demuestra *por qué* es un problema. Hasta que no lo explotás, no lo entendés de verdad.
+
+### Pasos
+
+1. **Creá un objetivo vulnerable.** Escribí (o pedile a la IA que escriba) una app Express mínima con una de estas vulnerabilidades deliberadas:
+   - SQL injection en un endpoint de búsqueda
+   - XSS reflejado en un parámetro de query
+   - Secrets hardcodeados en un endpoint de auth
+2. **Escribí el exploit ANTES de correrlo.** En un archivo `exploit.js` (o un curl), documentá tu predicción: qué endpoint vas a atacar, con qué payload, y qué esperás que pase.
+3. **Ejecutá el exploit.** Demostrá que la vulnerabilidad es real:
+   - SQLi: `' OR '1'='1` te devuelve más datos de los que debería
+   - XSS: un `<script>alert(1)</script>` se ejecuta en el navegador
+   - Secrets: extraés la credencial hardcodeada
+4. **Confirmá que tu auditoría lo detecta.** Corré tu `security-audit --path <objetivo> --ai` y verificá que marca la misma vulnerabilidad. ¿Coinciden? ¿Tu exploit encontró algo que el auditor no?
+5. **Remedialo** y re-ejecutá el exploit. Confirmá que ya no funciona.
+
+### Criterios de completitud
+
+- [ ] Escribiste tu predicción del exploit antes de correrlo
+- [ ] El exploit demostró la vulnerabilidad (no solo la nombraste)
+- [ ] Tu auditoría detecta la misma vulnerabilidad que el exploit
+- [ ] Después de remediar, el exploit ya no funciona
+- [ ] Podés explicar la vulnerabilidad *desde el lado del atacante*
+
+> 💡 **La conclusión:** un detector que no coincide con un exploit real no está funcionando. El exploit es la prueba de fuego de tu auditoría — si el auditor no encuentra lo que el atacante sí explota, tu pipeline te está dando falsa seguridad.
+
+---
+
+## 🛠️ Ejercicio 7 — Falso Positivo Hunt 🟠 stretch
+
+> **Descripción:** Corré tu auditoría contra código deliberadamente inocente y cazá los falsos positivos. Enseña el problema #1 real de la seguridad asistida por IA: la confianza falsa.
+
+El peor falso positivo no es un fastidio — es una distracción que tapa el hallazgo real. Aprender a reconocerlos es tan importante como detectar vulnerabilidades.
+
+### Pasos
+
+1. **Creá código inocente que engañe.** Escribí (o pedile a la IA que escriba) un archivo que *parezca* vulnerable pero no lo sea:
+   - `password` como nombre de variable en un test
+   - Un string con `SELECT` que no es SQL (una constante, una plantilla)
+   - `innerHTML` en un componente que escapa correctamente
+2. **Corré tu auditoría** contra ese archivo con `--ai`.
+3. **Registrá cada falso positivo:** qué marcó, por qué es falso, y qué regla/pista lo delataría.
+4. **Ajustá tu ai-analyzer** para reducir al menos un falso positivo (mejor heurística, mejor contexto).
+5. **Re-coré** y confirmá que el falso positivo desapareció sin romper la detección real.
+6. Escribí una frase: qué aprendiste sobre por qué la IA marca de más, y cómo lo manejás en un pipeline real.
+
+### Criterios de completitud
+
+- [ ] Creaste código inocente que engaña a tu auditoría
+- [ ] Registraste cada falso positivo con su causa
+- [ ] Ajustaste el analizador y eliminaste al menos un falso positivo
+- [ ] Confirmaste que la detección real sigue funcionando
+- [ ] Podés explicar por qué los falsos positivos son peligrosos, no solo molestos
+
+> 💡 **La conclusión:** la IA marca de más porque ve patrones, no contexto. En un pipeline real, los falsos positivos son el mayor costo oculto — cada uno es ruido que puede tapar el hallazgo que importa. El detector que aprende a callarse cuando debe vale más que el que nunca se calla.
+
+---
+
 ## 📣 LinkedIn — Post para publicar
 
 ---
@@ -221,5 +283,22 @@ Antes de pasar al Nivel 6, respondé:
 - [ ] ¿El análisis de IA (simulado) asigna severidad y detecta falsos positivos?
 - [ ] ¿Probaste contra un proyecto real y revisaste los resultados?
 - [ ] ¿El reporte generado es accionable (no solo una lista de problemas)?
+- [ ] ¿Demostraste una vulnerabilidad con un exploit, no solo la nombraste?
+- [ ] ¿Reduciste falsos positivos sin romper la detección real?
 
 → Si respondiste "sí" a todo, avanzá al **Nivel 6**.
+
+---
+
+## Verificación (auto-check)
+
+Corré el checklist para confirmar que completaste los ejercicios:
+
+```bash
+cd projects/level-05-security-audit
+node verify.js
+```
+
+`verify.js` chequea: el security-cli con detectores, la evidencia del exploit lab (ejercicio 6) y el registro de falsos positivos (ejercicio 7). Confirma *esfuerzo*, no *calidad* — la calidad la juzgás vos contra el self-review de arriba.
+
+> Mismo template que los niveles 1-4. Confirma esfuerzo + rúbrica que guía el juicio.

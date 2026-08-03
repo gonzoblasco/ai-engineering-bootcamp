@@ -1,22 +1,43 @@
 # Nivel 5 — Seguridad y auditoría con IA
 
-## Proyecto: Security Audit CLI
+Usar la IA como primer filtro de seguridad. Siete entregables (5 pasos core + 2 ejercicios) que van de "el auditor existe" a "el exploit demuestra y el falso positivo se caza".
 
-CLI que analiza proyectos Node.js en busca de vulnerabilidades comunes, combinando reglas locales con análisis de IA.
+## Proyectos
 
-### Archivos
+| # | Proyecto | Tipo | Enseña |
+|---|----------|------|--------|
+| 1-5 | Security Audit CLI (pasos 1-5) | 🟢 core | Detectores + IA + reporte |
+| 6 | Exploit Lab | 🔴 core | Entender la vulnerabilidad atacándola |
+| 7 | Falso Positivo Hunt | 🟠 stretch | Cazar la confianza falsa de la IA |
 
-- `security-cli/detectors/secrets.js` — detector de secrets hardcodeados
-- `security-cli/detectors/injection.js` — detector de SQL injection y XSS
-- `security-cli/detectors/dependencies.js` — detector de dependencias con CVEs
-- `security-cli/ai-analyzer.js` — análisis contextual con IA (simulado)
-- `security-cli/security-audit.js` — CLI principal
-- `security-cli/package.json` — dependencias y bin
+## Estructura del folder
 
-### Cómo empezar
+```
+level-05-security-audit/
+├── verify.js              # auto-check de esfuerzo (template del N1)
+├── security-cli/          # Pasos 1-5 (ya resuelto)
+│   ├── detectors/         # secrets, injection, dependencies
+│   ├── ai-analyzer.js     # severidad + falsos positivos
+│   └── security-audit.js  # CLI principal
+├── exploit.js             # Ejercicio 6 — tu exploit (crealo vos)
+├── project-6-exploit-notes.md   # Ejercicio 6 — predicción + remediación
+└── project-7-false-positives.md # Ejercicio 7 — stretch (opcional)
+```
 
-1. Leé la guía en `docs/level-05-security-audit.md`
-2. Construí los detectores uno por uno
-3. Conectalos con el analizador de IA
-4. Probá contra los proyectos de niveles anteriores
-5. Revisá los falsos positivos y ajustá reglas
+## Cómo empezar
+
+1. Leé la guía completa en `docs/level-05-security-audit.md`
+2. Construí los detectores uno por uno (pasos 1-3)
+3. Conectalos con el analizador de IA (paso 4) y el CLI (paso 5)
+4. Ejercicio 6: escribí un exploit contra tu propio código vulnerable y demostrá la vulnerabilidad
+5. (Stretch) Ejercicio 7: creá código inocente que engañe y cazá los falsos positivos
+6. Corré `node verify.js` para confirmar el esfuerzo
+7. Pasá el self-review y avanzá al Nivel 6
+
+## Verificación
+
+```bash
+node verify.js
+```
+
+Confirma estructura + evidencia (esfuerzo), no calidad. La calidad la juzgás vos contra el self-review de la guía.
