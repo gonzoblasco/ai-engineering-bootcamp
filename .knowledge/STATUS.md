@@ -44,7 +44,7 @@
 - Los posts de LinkedIn de los niveles quedaron sin publicar (decisión: eran el ejercicio de reflexión, no el fin).
 - **⚠️ Detached HEAD recurrente en el repo del proyecto** (2026-08-03): al llegar, `main` estaba en `ee2cc7d` pero los commits nuevos se creaban desacoplados (HEAD en el aire). Se corrigió con `git branch -f main <sha> && git checkout main` (fast-forward lineal, sin pérdida). **Lección:** tras cada sesión, verificar `git status` para confirmar que se está en la branch y no en detached HEAD antes de commitear. El patrón se repetía porque los commits se hacían sin checkout previo de la branch.
 
-## Expansión en curso — Niveles 1-2 (2026-08-03)
+## Expansión en curso — Niveles 1-3 (2026-08-03)
 
 Convertir el bootcamp en una estructura de educación en línea completa, nivel por nivel.
 
@@ -59,8 +59,17 @@ Convertir el bootcamp en una estructura de educación en línea completa, nivel 
 
 **Filosofía:** misma del N1 — profundidad antes que cantidad. El N2 no necesitaba más endpoints; necesitaba ejercicios que enseñen a *medir el prompt* y *verificar con tests*.
 
+**Nivel 3 expandido ✅** — de 2 a 4 proyectos:
+- Proyectos 1-2 (core, existentes): workflow automation CLI + AI code review system (review-cli ya resuelto).
+- **Proyecto 3 (nuevo, core)** — *Prove the gate*: diseñar un workflow, listar los gates con posición, y escribir tests con caso de bloqueo Y caso de paso para cada gate. Deliberadamente romper el input y ver el gate parar. Enseña que "un gate que no se puede testear no es un gate, es una esperanza" — el diseño se prueba por sus fallas, no por el happy path.
+- **Proyecto 4 (nuevo, stretch)** — *Audit your own workflow*: auditar el diseño con rúbrica (orden, poder de bloqueo, necesidad) comparando con el review de la IA. Extiende "don't trust, verify" de código a diseño de proceso.
+
+**Mecanismo de verificación ✅** — verify.js del N3 creado (mismo template, adaptado: review CLI + workflow automation + tests de gates + audit). El patrón escala por tercer nivel.
+
+**Filosofía:** misma — profundidad antes que cantidad. El N3 necesitaba ejercicios que enseñen a *probar los gates* y *auditar el diseño*, no más CLIs.
+
 ## Próximos pasos (si se retoma)
 
-- Aplicar el template de verificación (verify.js) a los niveles 3-10.
-- Expandir el siguiente nivel (N3 — Workflows) con la misma profundidad.
+- Aplicar el template de verificación (verify.js) a los niveles 4-10.
+- Expandir el siguiente nivel (N4 — Prompt Library) con la misma profundidad.
 - Posible conversión a contenido para posicionamiento (LinkedIn/tutorials).

@@ -1,19 +1,43 @@
 # Nivel 3 — Workflows con IA
 
-## Proyecto: CLI de code review
+Diseñar workflows estructurados con gates y checkpoints. Cuatro proyectos (3 core + 1 stretch) que van de "la CLI funciona" a "el gate se prueba y se audita".
 
-Herramienta de línea de comandos que analiza archivos JavaScript y genera reportes de code review en markdown.
+## Proyectos
 
-### Archivos
+| # | Proyecto | Tipo | Enseña |
+|---|----------|------|--------|
+| 1 | Workflow automation script | 🟢 core | CLI con pre-flight + gates + report |
+| 2 | AI code review system | 🟢 core | Review estructurado con dimensiones |
+| 3 | Prove the gate | 🟡 core | Testear que cada gate bloquea cuando debe |
+| 4 | Audit your own workflow | 🟠 stretch | Auditar el diseño del workflow |
 
-- `review-cli/index.js` — CLI tool con modo básico y modo --ai
-- `review-cli/package.json` — dependencias y bin
+## Estructura del folder
 
-### Cómo empezar
+```
+level-03-workflows/
+├── verify.js              # auto-check de esfuerzo (template del N1)
+├── review-cli/            # Proyecto 2 (ya resuelto)
+│   ├── index.js
+│   └── package.json
+├── workflow/              # Proyecto 1 (crealo vos: CLI con preflight + gates)
+├── gates.test.js          # Proyecto 3 — tests de tus gates (crealo vos)
+└── project-4-audit-notes.md  # Proyecto 4 — stretch (opcional)
+```
 
-1. Leé la guía en `docs/level-03-workflows.md`
-2. Construí el pipeline sin IA primero (reglas de estilo)
-3. Agregá el modo --ai con reglas de complejidad y calidad
-4. Probá contra los proyectos de niveles anteriores
-5. Iterá las reglas según los resultados
-6. Hacé el tool portable con bin en package.json
+## Cómo empezar
+
+1. Leé la guía completa en `docs/level-03-workflows.md`
+2. Proyecto 1: construí el workflow automation CLI con pre-flight y gates
+3. Proyecto 2: usá/mejorá el review-cli existente con dimensiones de review
+4. Proyecto 3: escribí tests que prueben que cada gate bloquea y permite
+5. (Stretch) Proyecto 4: auditá tu propio workflow con la rúbrica de gates
+6. Corré `node verify.js` para confirmar el esfuerzo
+7. Pasá el self-review y avanzá al Nivel 4
+
+## Verificación
+
+```bash
+node verify.js
+```
+
+Confirma estructura + evidencia (esfuerzo), no calidad. La calidad la juzgás vos contra el self-review de la guía.
