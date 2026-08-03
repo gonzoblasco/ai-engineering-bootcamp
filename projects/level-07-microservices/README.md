@@ -42,6 +42,17 @@ Sistema de microservicios (Users, Orders, Notifications) comunicados por un even
 - `notifications-service/index.js` — servicio de notificaciones (sin HTTP)
 - `index.js` — orquestador que levanta todo
 
+### Nivel 7 — Profundidad: contrato y prueba del flujo (archivos agregados)
+
+- `event-contract.js` — contrato de eventos como código (qué eventos, qué payload, quién produce/consume)
+- `event-flow.test.js` — test que demuestra: entrega a todos los suscriptores, aislamiento de fallos (_safeCall), cumplimiento del contrato, y flujo real user.created → notifications
+- `verify.js` — auto-check del nivel 7
+
+```bash
+node --test event-flow.test.js   # el contrato de eventos fluye y aísla fallos
+node verify.js                   # auto-check (15 checks)
+```
+
 ### Nivel 8 — Docker y Cloud (archivos agregados)
 
 - `users-service/Dockerfile` — imagen del users service (puerto 3001)
