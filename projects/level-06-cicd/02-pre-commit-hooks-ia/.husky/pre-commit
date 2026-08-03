@@ -1,4 +1,0 @@
-set -eu
-
-echo "Running staged checks with lint-staged..."
-npx lint-staged

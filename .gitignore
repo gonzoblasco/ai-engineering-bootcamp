@@ -1,1 +1,7 @@
+node_modules/
+dist/
+.env
 .DS_Store
+
+# Memoria institucional — la guarda el workspace, no el repo del proyecto
+.knowledge/
