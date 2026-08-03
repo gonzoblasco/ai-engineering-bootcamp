@@ -79,12 +79,13 @@ node verify.js                                                           # auto-
 - `dashboard/index.html` — dashboard de calidad (score, checks, violaciones, servicios)
 - `standards/fixtures/broken/` — sistema deliberadamente roto para probar el validador
 - `standards/validate.test.js` — prueba de fuego: confirma que el validador detecta violaciones
-- `verify.js` — auto-check del nivel 9 (standards + dashboard + proof del validador)
+- `verify.js` — auto-check del nivel 10 (sistema completo + CI/CD + proof end-to-end)
 
 ```bash
 node standards/validate.js                  # valida el sistema contra los estándares
 node --test standards/validate.test.js      # el validador detecta violaciones
-node verify.js                              # auto-check del nivel 9 (16 checks)
+node --test system.test.js                  # el sistema completo funciona end-to-end
+node verify.js                              # auto-check del nivel 10 (21 checks)
 ```
 
 ### Nivel 10 — Sistema completo (archivos agregados)

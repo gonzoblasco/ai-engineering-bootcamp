@@ -157,7 +157,20 @@ Se materializaron los artefactos estructurales que las guías expandidas referen
 
 **Filosofía:** misma — profundidad antes que cantidad. El N9 no necesitaba más estándares; necesitaba *probar* que el validador detecta cuando alguien los viola. Un estándar que tu validador nunca vio fallar no está siendo cumplido — está siendo ignorado.
 
+## Nivel 10 expandido ✅ (2026-08-03) — El sistema completo (final boss)
+
+**Nivel 10 expandido** — de 2 proyectos genéricos (full-stack task manager + retrospective, desalineados con la arquitectura convergente) a 4 proyectos que reflejan el sistema real N7-N9:
+- Proyectos 1-2 (core, existentes materializados): sistema completo (auth + gateway + orquestador) + CI/CD (quality.yml). Ya estaban construidos de niveles previos: `auth-service/` (register/login/logout/health con event bus), `gateway/` (enruta /auth /users /orders + health agregado), `index.js` (orquestador que levanta los 5 componentes), `.github/workflows/quality.yml` (valida estándares + bloquea score<80 + comenta en PR).
+- **Proyecto 3 (nuevo, core, el corazón)** — *Prove the full system*: `system.test.js` (test end-to-end) que arranca el sistema completo en `before`, verifica que el gateway enruta, el health agregado reporta todos ok, el flujo real de usuario (register → login → crear orden → listar), y los casos de error (401, 409, 404); apaga todo en `after`. Enseña que los bugs de integración son invisibles para los unit tests — el test e2e los encuentra.
+- **Proyecto 4 (nuevo, stretch)** — *System retrospective*: escribir `project-10-retrospective.md` (qué salió bien, qué fue desafiante, qué harías distinto, métricas, patrones de prompts, recomendaciones).
+
+**Materialización:** agregado `system.test.js` (10 tests, arranca/para los 5 servicios reales, usa fetch contra el gateway en :8080). Se encontró y corrigió un detalle real: los services responden 201 (no 200) en POST /users y /orders — el test ahora lo refleja. Los `console.log` de arranque de los services ensuciaban el pipe del test runner → se silencian en `before`/`after`. Se usa `--test-force-exit` porque los services abren servers que el runner no cierra solo.
+
+**Verificación:** verify.js del N10 creado (mismo template, adaptado: sistema completo + CI/CD + proof end-to-end). **Pasa 21/21** (stretch no-bloqueante). `node --test system.test.js` pasa 10/10. Los tests previos siguen pasando: N7 event-flow 5/5, N8 validate 5/5, N9 standards 7/7. Puertos liberados tras el test (no quedan servers colgando).
+
+**Filosofía:** misma — profundidad antes que cantidad. El N10 no necesitaba más features; necesitaba *probar* que el sistema completo funciona de punta a punta. Un sistema que nunca viste correr entero no es un sistema — es una colección de esperanzas.
+
 ## Próximos pasos (si se retoma)
 
-- Expandir el siguiente nivel (N10 — sistema completo) con la misma profundidad.
+- ✅ Curso completo 10/10 con niveles expandidos y verify.js en todos.
 - Posible conversión a contenido para posicionamiento (LinkedIn/tutorials).
