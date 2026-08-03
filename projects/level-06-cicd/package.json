@@ -4,6 +4,7 @@
   "description": "CI/CD con IA — Nivel 6 del AI Engineering Bootcamp",
   "scripts": {
     "release-notes": "node scripts/generate-release-notes.js",
-    "analyze-pr": "node scripts/analyze-pr.js"
+    "analyze-pr": "node scripts/analyze-pr.js",
+    "test-gate": "node scripts/test-gate.js"
   }
 }

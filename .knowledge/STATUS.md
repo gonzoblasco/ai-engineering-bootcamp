@@ -105,8 +105,21 @@ Se materializaron los artefactos estructurales que las guías expandidas referen
 - N4: `find('review')` atrapaba `roles/code-reviewer` en vez de `workflows/review-code`.
 - Lección (para skills/futuros verify): **un regex de extensión en un literal va con un solo backslash, y los paths que devuelve walk/findFiles son absolutos — no pasar por readIf(relativo).**
 
+## Nivel 6 expandido ✅ (2026-08-03) — CI/CD con IA
+
+**Nivel 6 expandido** — de 2 a 4 proyectos:
+- Proyectos 1-2 (core, existentes): AI-powered GitHub Action (PR review) + automated release notes. El `analyze-pr.js` y `generate-release-notes.js` ya existían.
+- **Proyecto 3 (nuevo, core, el corazón)** — *Prove the CI gate*: crear `fixtures/bad.diff` (PR que DEBE ser bloqueado: secret hardcodeado) y `fixtures/good.diff` (PR legítimo que DEBE pasar), y `scripts/test-gate.js` que corre el gate contra ambos y falla si alguno no cumple. Conectado al workflow vía job `prove-gate` — el pipeline se prueba a sí mismo en cada PR.
+- **Proyecto 4 (nuevo, stretch)** — *Audit your pipeline*: cazar falsos positivos/negativos del propio pipeline, revisar el orden de los gates, escribir `project-6-pipeline-audit.md`.
+
+**Materialización:** agregado `--gate` a `analyze-pr.js` (bloquea con exit 1 si hay hallazgos high determinísticos — secrets), fixtures bad/good, `test-gate.js`, gate + job `prove-gate` en `pr-review.yml`, README actualizado. CHANGELOG.md era un placeholder trackeado → eliminado (es output del script, no fuente, igual que workflow-report/security-audit del batch anterior).
+
+**Verificación:** verify.js del N6 creado (mismo template). **Pasa 13/13** (stretch no-bloqueante). El test del gate se probó de verdad: bad.diff → exit 1, good.diff → exit 0.
+
+**Filosofía:** misma — profundidad antes que cantidad. El N6 no necesitaba más workflows; necesitaba *probar* que el gate bloquea lo malo y deja pasar lo bueno. Lleva el tema "un gate que no podés testear no es un gate" del N3 (local) al CI remoto.
+
 ## Próximos pasos (si se retoma)
 
-- Aplicar el template de verificación (verify.js) a los niveles 6-10.
-- Expandir el siguiente nivel (N6 — CI/CD) con la misma profundidad.
+- Expandir el siguiente nivel (N7 — arquitectura/microservicios) con la misma profundidad.
+- Aplicar el template de verificación (verify.js) a los niveles 7-10.
 - Posible conversión a contenido para posicionamiento (LinkedIn/tutorials).

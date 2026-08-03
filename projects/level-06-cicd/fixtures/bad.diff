@@ -1,0 +1,78 @@
+diff --git a/src/config.js b/src/config.js
+new file mode 100644
+index 0000000..e69de29
+--- /dev/null
++++ b/src/config.js
+@@ -0,0 +1,12 @@
++module.exports = {
++  // TODO: mover esto a un secret manager antes de mergear
++  apiKey: "sk-live-3f8a2b9c1d4e5f6a7b8c9d0e",
++  db: {
++    host: "localhost",
++    user: "app",
++    // password: "admin123"
++  },
++};
+diff --git a/src/logger.js b/src/logger.js
+new file mode 100644
+index 0000000..e69de29
+--- /dev/null
++++ b/src/logger.js
+@@ -0,0 +1,8 @@
++function setupLogger() {
++  console.log("logger inicializado");
++  console.debug("modo debug");
++  return { level: "info" };
++}
++
++module.exports = { setupLogger };
+diff --git a/src/legacy.js b/src/legacy.js
+new file mode 100644
+index 0000000..e69de29
+--- /dev/null
++++ b/src/legacy.js
+@@ -0,0 +1,55 @@
++function processOrder(order) {
++  let total = 0;
++  let items = order.items;
++  let i = 0;
++  while (i < items.length) {
++    let item = items[i];
++    let price = item.price;
++    let qty = item.quantity;
++    let lineTotal = price * qty;
++    let discount = 0;
++    if (qty > 10) {
++      discount = 0.1;
++    }
++    let applied = lineTotal - lineTotal * discount;
++    total = total + applied;
++    i = i + 1;
++  }
++  let tax = total * 0.21;
++  let shipping = 0;
++  if (total < 500) {
++    shipping = 99;
++  }
++  let grandTotal = total + tax + shipping;
++  let result = {};
++  result.total = total;
++  result.tax = tax;
++  result.shipping = shipping;
++  result.grandTotal = grandTotal;
++  result.itemsCount = order.items.length;
++  result.average = total / order.items.length;
++  result.isBulk = order.items.length > 10;
++  result.isEligible = total > 1000;
++  result.category = "standard";
++  if (total > 5000) {
++    result.category = "premium";
++  }
++  if (order.priority) {
++    result.priority = true;
++    result.shipping = 0;
++  }
++  return result;
++}
++
++module.exports = { processOrder };

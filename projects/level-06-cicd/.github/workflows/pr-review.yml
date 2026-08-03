@@ -33,6 +33,11 @@ jobs:
           node scripts/analyze-pr.js --diff /tmp/pr-diff.txt > /tmp/analysis.json
           echo "analysis=$(cat /tmp/analysis.json)" >> $GITHUB_OUTPUT
 
+      - name: Gate - fail check on critical findings
+        if: always()
+        run: |
+          node scripts/analyze-pr.js --diff /tmp/pr-diff.txt --gate || exit 1
+
       - name: Post comment
         uses: actions/github-script@v7
         with:
@@ -97,3 +102,19 @@ jobs:
                 body,
               });
             }
+
+  # Prove the gate: the pipeline tests its own gate on every PR.
+  # A gate that can't be tested isn't a gate (see Project 3).
+  prove-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run gate tests
+        run: node scripts/test-gate.js

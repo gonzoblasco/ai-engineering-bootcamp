@@ -1,0 +1,54 @@
+diff --git a/src/format.js b/src/format.js
+new file mode 100644
+index 0000000..e69de29
+--- /dev/null
++++ b/src/format.js
+@@ -0,0 +1,14 @@
++function formatCurrency(amount) {
++  const formatter = new Intl.NumberFormat("es-AR", {
++    style: "currency",
++    currency: "ARS",
++  });
++  return formatter.format(amount);
++}
++
++function formatDate(date) {
++  return new Intl.DateTimeFormat("es-AR").format(date);
++}
++
++module.exports = { formatCurrency, formatDate };
+diff --git a/src/format.test.js b/src/format.test.js
+new file mode 100644
+index 0000000..e69de29
+--- /dev/null
++++ b/src/format.test.js
+@@ -0,0 +1,15 @@
++const { formatCurrency, formatDate } = require("./format");
++
++test("formatCurrency formatea pesos argentinos", () => {
++  expect(formatCurrency(1234.5)).toBe("$ 1.234,50");
++});
++
++test("formatCurrency maneja cero", () => {
++  expect(formatCurrency(0)).toBe("$ 0,00");
++});
++
++test("formatDate formatea una fecha", () => {
++  const d = new Date(2026, 7, 3);
++  expect(formatDate(d)).toBe("3/8/2026");
++});
+diff --git a/src/utils.js b/src/utils.js
+new file mode 100644
+index 0000000..e69de29
+--- /dev/null
++++ b/src/utils.js
+@@ -0,0 +1,9 @@
++function slugify(input) {
++  return input
++    .toLowerCase()
++    .trim()
++    .replace(/[^a-z0-9]+/g, "-")
++    .replace(/^-+|-+$/g, "");
++}
++
++module.exports = { slugify };

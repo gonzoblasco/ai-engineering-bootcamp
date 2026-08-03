@@ -184,8 +184,24 @@ function main() {
   const diffContent = fs.readFileSync(diffPath, 'utf-8');
   const result = analyzeDiff(diffContent);
 
+  // --- Gate: bloquea si hay hallazgos de severidad high ---
+  // Lo que bloquea el merge debe ser determinístico (ver docs/level-06-cicd.md).
+  const gateMode = args.includes('--gate');
+  if (gateMode) {
+    const blocking = result.findings.filter((f) => f.severity === 'high');
+    result.gate = {
+      blocked: blocking.length > 0,
+      reasons: blocking.map((f) => `${f.type}: ${f.description} (${f.file}:${f.line})`),
+    };
+  }
+
   // Output como JSON para que el workflow lo pueda parsear
   console.log(JSON.stringify(result, null, 2));
+
+  // Salir con código no-cero si el gate bloquea
+  if (gateMode && result.gate && result.gate.blocked) {
+    process.exit(1);
+  }
 }
 
 main();
