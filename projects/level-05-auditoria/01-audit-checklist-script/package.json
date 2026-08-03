@@ -1,0 +1,24 @@
+{
+  "name": "audit-checklist-script",
+  "version": "1.0.0",
+  "description": "Kit de auditoría de código IA: checklists y script regex-based de validación automática",
+  "type": "module",
+  "main": "src/audit.js",
+  "scripts": {
+    "audit": "node src/audit.js",
+    "audit:json": "node src/audit.js --format=json",
+    "test": "echo 'No tests configured yet' && exit 0"
+  },
+  "keywords": [
+    "audit",
+    "security",
+    "performance",
+    "code-review",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
