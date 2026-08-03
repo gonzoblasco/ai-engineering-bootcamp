@@ -44,7 +44,7 @@
 - Los posts de LinkedIn de los niveles quedaron sin publicar (decisión: eran el ejercicio de reflexión, no el fin).
 - **⚠️ Detached HEAD recurrente en el repo del proyecto** (2026-08-03): al llegar, `main` estaba en `ee2cc7d` pero los commits nuevos se creaban desacoplados (HEAD en el aire). Se corrigió con `git branch -f main <sha> && git checkout main` (fast-forward lineal, sin pérdida). **Lección:** tras cada sesión, verificar `git status` para confirmar que se está en la branch y no en detached HEAD antes de commitear. El patrón se repetía porque los commits se hacían sin checkout previo de la branch.
 
-## Expansión en curso — Niveles 1-3 (2026-08-03)
+## Expansión en curso — Niveles 1-4 (2026-08-03)
 
 Convertir el bootcamp en una estructura de educación en línea completa, nivel por nivel.
 
@@ -68,8 +68,17 @@ Convertir el bootcamp en una estructura de educación en línea completa, nivel 
 
 **Filosofía:** misma — profundidad antes que cantidad. El N3 necesitaba ejercicios que enseñen a *probar los gates* y *auditar el diseño*, no más CLIs.
 
+**Nivel 4 expandido ✅** — de 3 a 5 proyectos:
+- Proyectos 1-3 (core, existentes): template system + code review prompt + refactoring prompt. El sistema `prompt-library/` ya existe resuelto (render.js con includes y validación de variables).
+- **Proyecto 4 (nuevo, core)** — *Template quality audit*: auditar dos templates con rúbrica de 4 ejes (specificity, stability, testability, reusability) puntuando 0-2, y correrlos de verdad contra código real. Enseña que "un template que se lee bien pero rinde mal es peor que no tener template — da falsa confianza".
+- **Proyecto 5 (nuevo, stretch)** — *Template versioning*: congelar baseline (v1), cambiar el template, observar el impacto en renders viejos, escribir changelog. Enseña que "un template compartido es una API — cambiarlo sin avisar es un breaking change silencioso".
+
+**Mecanismo de verificación ✅** — verify.js del N4 creado (mismo template, adaptado: librería + templates review/refactor + quality audit + versioning). El patrón escala por cuarto nivel.
+
+**Filosofía:** misma — profundidad antes que cantidad. El N4 necesitaba ejercicios que enseñen a *evaluar* y *versionar* templates, no más templates.
+
 ## Próximos pasos (si se retoma)
 
-- Aplicar el template de verificación (verify.js) a los niveles 4-10.
-- Expandir el siguiente nivel (N4 — Prompt Library) con la misma profundidad.
+- Aplicar el template de verificación (verify.js) a los niveles 5-10.
+- Expandir el siguiente nivel (N5 — Seguridad) con la misma profundidad.
 - Posible conversión a contenido para posicionamiento (LinkedIn/tutorials).
