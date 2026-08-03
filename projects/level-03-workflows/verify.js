@@ -56,7 +56,16 @@ check('review CLI has an AI mode', /--ai|ai/i.test(cli), 'add an --ai mode');
 // Flexible location: workflow/ or automator/ or a script with preflight/gate keywords.
 const autoScript = findFiles(root, (p) => /\.(js|mjs|ts)$/.test(p) && /workflow|auto|pipeline|gate|preflight/i.test(p));
 check('workflow automation script exists', autoScript.length > 0, 'create a workflow automation script (CLI)');
-const autoCode = autoScript.map((p) => readIf(p)).join(' ');
+// findFiles returns ABSOLUTE paths — read them directly.
+const autoCode = autoScript
+  .map((p) => {
+    try {
+      return fs.readFileSync(p, 'utf8');
+    } catch {
+      return '';
+    }
+  })
+  .join(' ');
 if (autoScript.length) {
   check('has pre-flight check', /preflight|pre-flight|pre.?flight|main|uncommitted/i.test(autoCode), 'add a pre-flight check');
   check('has a gate', /gate|if.*fail|process\.exit|throw/i.test(autoCode), 'add a gate that stops on failure');
@@ -66,7 +75,16 @@ if (autoScript.length) {
 // --- Project 3: prove the gate (evidence) ---
 const testFiles = findFiles(root, (p) => /\.(test|spec)\.(js|mjs|ts)$/.test(p) || /test|spec/.test(path.basename(p)));
 check('gate test file exists', testFiles.length > 0, 'write a test file that exercises your gates');
-const gateTests = testFiles.map((p) => readIf(p)).join(' ');
+// findFiles returns ABSOLUTE paths — read them directly.
+const gateTests = testFiles
+  .map((p) => {
+    try {
+      return fs.readFileSync(p, 'utf8');
+    } catch {
+      return '';
+    }
+  })
+  .join(' ');
 if (testFiles.length) {
   check('tests have a blocking case', /fail|block|stop|reject|throw|expect.*(fail|throw)/i.test(gateTests), 'write a blocking test case (gate must stop)');
   check('tests have a passing case', /pass|allow|proceed|resolve|ok/i.test(gateTests), 'write a passing test case (gate must allow)');

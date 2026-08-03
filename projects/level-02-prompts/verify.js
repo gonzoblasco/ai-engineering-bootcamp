@@ -54,7 +54,7 @@ const testFiles = fs
   })
   .flatMap((d) => {
     try {
-      return fs.readdirSync(path.join(root, d));
+      return fs.readdirSync(path.join(root, d)).map((f) => path.join(d, f));
     } catch {
       return [];
     }

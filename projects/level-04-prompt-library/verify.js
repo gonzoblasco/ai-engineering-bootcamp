@@ -53,8 +53,18 @@ const templates = walk(path.join(libDir, 'prompts'), (p) => p.endsWith('.prompt.
 check('has at least 4 templates', templates.length >= 4, `found ${templates.length}; create at least 4 .prompt.md templates`);
 
 // --- Project 2: code review prompt ---
-const reviewTpl = templates.find((p) => /review/i.test(p));
-const reviewSrc = reviewTpl ? readIf(reviewTpl) : '';
+// Find the code-review WORKFLOW template (not the role prompt).
+const reviewTpl = templates.find((p) => /review-code/i.test(p) || /workflows.*review/i.test(p));
+// templates holds ABSOLUTE/relative paths (from walk) — read them directly.
+const reviewSrc = reviewTpl
+  ? (() => {
+      try {
+        return fs.readFileSync(reviewTpl, 'utf8');
+      } catch {
+        return '';
+      }
+    })()
+  : '';
 check('has a code review template', !!reviewTpl, 'create a code review template');
 if (reviewTpl) {
   check('review covers dimensions', /correct|secur|convention|perf|test/i.test(reviewSrc), 'cover correctness, security, conventions, performance, tests');
@@ -64,11 +74,19 @@ if (reviewTpl) {
 
 // --- Project 3: refactoring prompt ---
 const refacTpl = templates.find((p) => /refactor/i.test(p));
-const refacSrc = refacTpl ? readIf(refacTpl) : '';
+const refacSrc = refacTpl
+  ? (() => {
+      try {
+        return fs.readFileSync(refacTpl, 'utf8');
+      } catch {
+        return '';
+      }
+    })()
+  : '';
 check('has a refactoring template', !!refacTpl, 'create a refactoring template');
 if (refacTpl) {
   check('refactor identifies patterns', /duplicat|long function|name|dead import/i.test(refacSrc), 'identify duplication, long functions, names, dead imports');
-  check('refactor preserves behavior', /do not change|do not add|preserve|behavior/i.test(refacSrc), 'explicitly state behavior preservation');
+  check('refactor preserves behavior', /do not change|do not add|preserve|behavior|no cambies|no agregues|no cambies el comportamiento|no agregues features/i.test(refacSrc), 'explicitly state behavior preservation');
 }
 
 // --- Project 4: template quality audit (evidence) ---

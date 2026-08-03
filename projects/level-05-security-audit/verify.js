@@ -56,7 +56,17 @@ check('ai-analyzer detects false positives', /false.?positive|test|fixtures|mock
 const exploitFiles = walk(root, (p) => /exploit|payload/i.test(path.basename(p)));
 const exploitNotes = readIf('project-6-exploit-notes.md');
 check('exploit lab exists', exploitFiles.length > 0 || !!exploitNotes, 'write an exploit (exploit.js/curl) or project-6-exploit-notes.md');
-const exploitSrc = exploitFiles.map((p) => readIf(p)).join(' ') + ' ' + exploitNotes;
+// exploitFiles holds ABSOLUTE paths (from walk), so read them directly.
+const exploitSrc =
+  exploitFiles
+    .map((p) => {
+      try {
+        return fs.readFileSync(p, 'utf8');
+      } catch {
+        return '';
+      }
+    })
+    .join(' ') + ' ' + exploitNotes;
 if (exploitFiles.length || exploitNotes) {
   check('exploit has a prediction', /predict|expected|expect|payload|hypothes/i.test(exploitSrc), 'document your prediction before running');
   check('exploit targets a real vuln', /injection|' OR '|xss|script|password|secret|token/i.test(exploitSrc), 'target SQLi/XSS/secrets');

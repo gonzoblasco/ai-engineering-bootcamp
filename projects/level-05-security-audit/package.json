@@ -1,0 +1,9 @@
+{
+  "name": "level-05-exploit-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Level 5 Exploit Lab — vulnerable app + exploit for learning",
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}
