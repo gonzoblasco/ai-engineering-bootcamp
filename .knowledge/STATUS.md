@@ -44,21 +44,23 @@
 - Los posts de LinkedIn de los niveles quedaron sin publicar (decisión: eran el ejercicio de reflexión, no el fin).
 - **⚠️ Detached HEAD recurrente en el repo del proyecto** (2026-08-03): al llegar, `main` estaba en `ee2cc7d` pero los commits nuevos se creaban desacoplados (HEAD en el aire). Se corrigió con `git branch -f main <sha> && git checkout main` (fast-forward lineal, sin pérdida). **Lección:** tras cada sesión, verificar `git status` para confirmar que se está en la branch y no en detached HEAD antes de commitear. El patrón se repetía porque los commits se hacían sin checkout previo de la branch.
 
-## Expansión en curso — Nivel 1 (2026-08-03)
+## Expansión en curso — Niveles 1-2 (2026-08-03)
 
-Convertir el bootcamp en una estructura de educación en línea completa, nivel por nivel. Empezando por el Nivel 1.
+Convertir el bootcamp en una estructura de educación en línea completa, nivel por nivel.
 
-**Nivel 1 expandido ✅** — de 2 a 4 proyectos:
-- Proyectos 1-2 (core, existentes): landing page + password generator.
-- **Proyecto 3 (nuevo, core)** — *Iteración deliberada*: reconstruir el generator con 3 estrategias de prompt (vague/specific/constrained) y comparar. Enseña el "porqué" (especificidad = habilidad, no regalo).
-- **Proyecto 4 (nuevo, stretch)** — *Modo auditor*: encontrar el bug en código generado roto antes de correrlo. Enseña "don't trust, verify".
+**Nivel 1 expandido ✅** — de 2 a 4 proyectos (ver arriba): landing + password gen (core) + *Iteración deliberada* (core, 3 estrategias de prompt) + *Modo auditor* (stretch, encontrar bug). verify.js creado como template.
 
-**Mecanismo de verificación ✅** — `projects/level-01-hello-world/verify.js`: script que confirma esfuerzo (estructura + evidencia), no calidad. Es el **template para niveles futuros**: misma estructura de checks por proyecto + rúbrica de auto-evaluación.
+**Nivel 2 expandido ✅** — de 2 a 4 proyectos:
+- Proyectos 1-2 (core, existentes): REST API todo list + refactor legacy code.
+- **Proyecto 3 (nuevo, core)** — *Prompt A/B showdown*: construir el mismo endpoint con prompt vago vs estructurado y medir el delta. Enseña que en codebases existentes el contexto lo es todo (el AI no matchea patrones que nunca vio).
+- **Proyecto 4 (nuevo, stretch)** — *Break it on purpose*: pedirle a la IA código con bug sutil, escribir hipótesis antes de correr, probar con tests que fallan, y verificar el fix. Extiende "don't trust, verify" del N1 de sintaxis a lógica — tests como árbitro.
 
-**Filosofía:** agregar profundidad (el porqué) antes que cantidad (más proyectos iguales). El N1 no necesitaba más ejercicios del mismo tipo — necesitaba ejercicios que enseñen a *dirigir* y *auditar* la IA.
+**Mecanismo de verificación ✅** — verify.js del N2 creado (mismo template del N1, adaptado: API + tests + notas A/B + bug-hunt). El patrón escala.
+
+**Filosofía:** misma del N1 — profundidad antes que cantidad. El N2 no necesitaba más endpoints; necesitaba ejercicios que enseñen a *medir el prompt* y *verificar con tests*.
 
 ## Próximos pasos (si se retoma)
 
-- Aplicar el template de verificación (verify.js) a los niveles 2-10.
-- Expandir el siguiente nivel (N2 — Prompts) con la misma profundidad.
+- Aplicar el template de verificación (verify.js) a los niveles 3-10.
+- Expandir el siguiente nivel (N3 — Workflows) con la misma profundidad.
 - Posible conversión a contenido para posicionamiento (LinkedIn/tutorials).
