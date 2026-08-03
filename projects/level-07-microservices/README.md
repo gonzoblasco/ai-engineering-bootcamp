@@ -77,6 +77,15 @@ node verify.js                                                           # auto-
 - `standards/validate.js` — validador que aplica los estándares al sistema
 - `generate-dashboard-data.js` — genera dashboard/data.json desde el validador
 - `dashboard/index.html` — dashboard de calidad (score, checks, violaciones, servicios)
+- `standards/fixtures/broken/` — sistema deliberadamente roto para probar el validador
+- `standards/validate.test.js` — prueba de fuego: confirma que el validador detecta violaciones
+- `verify.js` — auto-check del nivel 9 (standards + dashboard + proof del validador)
+
+```bash
+node standards/validate.js                  # valida el sistema contra los estándares
+node --test standards/validate.test.js      # el validador detecta violaciones
+node verify.js                              # auto-check del nivel 9 (16 checks)
+```
 
 ### Nivel 10 — Sistema completo (archivos agregados)
 

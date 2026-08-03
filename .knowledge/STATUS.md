@@ -144,8 +144,20 @@ Se materializaron los artefactos estructurales que las guías expandidas referen
 
 **Filosofía:** misma — profundidad antes que cantidad. El N8 no necesitaba más templates de cloud; necesitaba *probar* que el validador de infra detecta los errores que bloquearían un deploy. La infra con IA no es "copiar y pegar un template" — es generar rápido y validar duro.
 
+## Nivel 9 expandido ✅ (2026-08-03) — Multiplicador de equipo
+
+**Nivel 9 expandido** — de 1 proyecto grande (5 pasos) a 4 proyectos, manteniendo la profundidad original:
+- Proyectos 1-2 (core, existentes): estándares como código (standards.json) + validador (validate.js) + dashboard. El sistema `standards/` y `dashboard/` ya existía materializado de niveles previos.
+- **Proyecto 3 (nuevo, core, el corazón)** — *Prove the standards*: `standards/fixtures/broken/` con un sistema deliberadamente roto (servicio faltante, sin /health, líneas largas, secret hardcodeado, READMEs faltantes) y `standards/validate.test.js` que confirma que el validador detecta cada tipo de violación plantada. El sistema bueno debe seguir pasando con score alto.
+- **Proyecto 4 (nuevo, stretch)** — *Audit the standards*: separar estándares enforceable vs aspiracional, cazar falsos positivos/negativos del validador, agregar un estándar nuevo con su test, escribir `project-9-standards-audit.md`.
+
+**Materialización:** agregado fixture broken (users-service con secret + línea larga + sin health; orders-service con línea larga + sin health; notifications-service ausente; READMEs faltantes) y `standards/validate.test.js` (7 tests). Verificado: sistema bueno score 100/0 violaciones, fixture roto score 0/todas las categorías FAIL. El validador detecta style (líneas largas) y security (secrets) con precisión.
+
+**Verificación:** verify.js del N9 creado (mismo template, adaptado: standards + dashboard + proof del validador). **Pasa 16/16** (stretch no-bloqueante). `node --test standards/validate.test.js` pasa 7/7.
+
+**Filosofía:** misma — profundidad antes que cantidad. El N9 no necesitaba más estándares; necesitaba *probar* que el validador detecta cuando alguien los viola. Un estándar que tu validador nunca vio fallar no está siendo cumplido — está siendo ignorado.
+
 ## Próximos pasos (si se retoma)
 
-- Expandir el siguiente nivel (N9 — estándares de equipo) con la misma profundidad.
-- Aplicar el template de verificación (verify.js) a los niveles 9-10.
+- Expandir el siguiente nivel (N10 — sistema completo) con la misma profundidad.
 - Posible conversión a contenido para posicionamiento (LinkedIn/tutorials).

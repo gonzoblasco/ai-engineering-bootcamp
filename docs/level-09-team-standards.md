@@ -1,8 +1,10 @@
 # Nivel 9 — Multiplicador de equipo con IA 👥
 
-> **Meta:** Escalar estándares de equipo usando IA. Definir reglas reutilizables, validar que el código las cumple, y visualizar el estado en un dashboard.
+> **Meta:** Escalar estándares de equipo usando IA. Definir reglas reutilizables, validar que el código las cumple, visualizar el estado en un dashboard — y **probar** que tu validador de estándares detecta cuando alguien las viola.
 >
-> **Dificultad:** Avanzado | **Proyecto:** 9 (extiende el N7/N8) | **Tiempo estimado:** 120-150 minutos
+> **Dificultad:** Avanzado | **Proyectos:** 4 (2 core + 1 profundidad + 1 stretch) | **Tiempo estimado:** 3-4 horas
+>
+> **Nota:** este nivel extiende el sistema del **Nivel 7/8** (mismo folder, ADR-001). Reusás los microservicios, los Dockerfiles y el CloudFormation template.
 
 ---
 
@@ -42,10 +44,10 @@ La clave es que los estándares sean **código, no documentación**. Un archivo 
 
 ```
 standards.json
-├── commit: { format: "type(scope): description", allowedTypes: [...] }
-├── style: { maxLineLength: 80, maxFunctionLines: 30 }
-├── health: { requiredPath: "/health", requiredOn: ["users", "orders"] }
-├── security: { detectSecrets: true, detectInjection: true }
+├── services: { required: [...], healthCheckPath: "/health" }
+├── style: { maxLineLength: 100, maxFunctionLines: 30, noConsoleLogInSrc: true }
+├── security: { detectSecrets: true }
+├── docs: { requireReadmePerService: true }
 └── testing: { requireTestsForNewFiles: true }
 ```
 
@@ -59,142 +61,149 @@ Un dashboard de calidad no es un lujo — es la **verificación continua** de qu
 
 Si el equipo ve el dashboard, el estándar se vuelve real. Si no lo ve, es teoría.
 
+### El tema que este nivel lleva al extremo
+
+Desde el N1 venís con **"don't trust, verify"**. Acá se aplica literal al estándar mismo:
+
+- El validador (`standards/validate.js`) es el **árbitro** entre el código y el estándar.
+- Un validador que nunca viste fallar no te dice nada: podés creer que el equipo cumple los estándares porque "el dashboard da 100", pero el validador puede no detectar las violaciones.
+- La prueba de fuego: **violá el estándar a propósito y confirmá que el validador lo agarra.**
+
+El estándar más caro no es el que no se cumple — es el que **tu validador no mide** y que se degrada silenciosamente mientras el dashboard muestra verde.
+
 ---
 
-## 🛠️ Práctica — Estándares + Dashboard sobre el sistema N7/N8
+## 🛠️ Proyecto 1 — Los estándares como código (core)
 
-Vas a definir estándares de equipo para el sistema de microservicios, construir un validador que los aplique, y visualizar todo en un dashboard.
+> **Descripción:** Definir los estándares de equipo en `standards/standards.json` — la fuente de verdad única.
 
-### Setup
+### Pasos
 
-```bash
-cd projects/level-07-microservices  # reusás el sistema
-mkdir -p standards dashboard
-```
-
-### Paso 1: Los estándares
-
-Definí los estándares como código.
-
-Prompt:
+1. Creá `standards/standards.json` con los estándares. Prompt:
 
 > "Creá un archivo standards/standards.json que defina estándares de equipo para un sistema de microservicios Node.js:
 >
-> ```json
-> {
->   "services": {
->     "required": ["users-service", "orders-service", "notifications-service"],
->     "healthCheckPath": "/health"
->   },
->   "commit": {
->     "format": "type(scope): description",
->     "allowedTypes": ["feat", "fix", "chore", "refactor", "docs", "test", "perf", "ci", "style"],
->     "requireScope": false
->   },
->   "style": {
->     "maxLineLength": 80,
->     "maxFunctionLines": 30,
->     "noConsoleLogInSrc": true
->   },
->   "security": {
->     "detectSecrets": true,
->     "detectInjection": true,
->     "detectVulnerableDeps": true
->   },
->   "testing": {
->     "requireTestsForNewFiles": true
->   },
->   "docs": {
->     "requireReadmePerService": true,
->     "requireApiDocPerService": true
->   }
-> }
-> ```
+> - **services**: required = users-service, orders-service, notifications-service; healthCheckPath = /health
+> - **commit**: format = type(scope): description; allowedTypes = [feat, fix, chore, refactor, docs, test, perf, ci, style]
+> - **style**: maxLineLength = 100; maxFunctionLines = 30; noConsoleLogInSrc = true
+> - **security**: detectSecrets = true
+> - **docs**: requireReadmePerService = true
 >
-> Ajustá los valores si querés (por ejemplo, maxLineLength podría ser 100 para JS moderno). El archivo debe ser válido JSON y ser la fuente de verdad de los estándares."
+> El archivo debe ser JSON válido y ser la fuente de verdad."
 
-### Paso 2: El validador de estándares
+### Criterios de completitud
 
-Ahora construí un script que lea los estándares y valide el sistema contra ellos.
+- [ ] `standards/standards.json` existe y es JSON válido
+- [ ] Define servicios, estilo, seguridad y docs
+- [ ] Entendés por qué el estándar como código gana sobre la documentación
 
-Prompt:
+---
+
+## 🛠️ Proyecto 2 — El validador + el dashboard (core)
+
+> **Descripción:** Construir el validador que aplica los estándares al sistema, y el dashboard que visualiza el estado.
+
+### Pasos
+
+1. Creá `standards/validate.js`. Prompt:
 
 > "Creá un script standards/validate.js que:
 > - Lea standards/standards.json
 > - Valide el sistema contra los estándares:
 >   - **Services**: que existan los servicios requeridos (carpetas con index.js)
->   - **Health check**: que cada servicio HTTP tenga un endpoint /health
->   - **Style**: detectar líneas > maxLineLength y funciones > maxFunctionLines en el código
->   - **Security**: correr detectores básicos de secrets (patrones de password/token) — reutilizá la lógica de niveles anteriores si podés
->   - **Docs**: que cada servicio tenga un README.md
-> - Devuelva un objeto con el resultado por estándar:
->   ```js
->   {
->     score: 87,  // 0-100
->     checks: [
->       { name: "services", status: "pass" | "fail" | "warn", details: [...] },
->       { name: "health-check", status: "...", details: [...] },
->       ...
->     ],
->     violations: [
->       { standard: "style", file: "users-service/index.js", line: 42, message: "Línea de 95 caracteres (max 80)" }
->     ]
->   }
-> ```
-> - Use solo módulos nativos (fs, path)
-> - Exporte la función validate(projectRoot, standards) para que el dashboard la pueda usar"
+>   - **Health check**: que cada servicio HTTP tenga /health
+>   - **Style**: detectar líneas > maxLineLength y funciones > maxFunctionLines
+>   - **Security**: detectar secrets hardcodeados (patrones de password/token)
+>   - **Docs**: que cada servicio tenga README.md
+> - Devuelva `{ score, checks: [{name, status, details}], violations: [...] }`
+> - Use solo módulos nativos y exporte `validate(projectRoot, standards)`"
 
-### Paso 3: El dashboard
+2. Creá el dashboard `dashboard/index.html` que muestre score, checks, violaciones y servicios.
 
-Construí un dashboard HTML que visualice el estado del sistema.
+3. Creá `generate-dashboard-data.js` que ejecute el validador y escriba `dashboard/data.json`.
 
-Prompt:
-
-> "Creá un dashboard (dashboard/index.html) que muestre el estado de calidad del sistema de microservicios. El dashboard debe:
->
-> - Cargar el resultado de standards/validate.js (simulado en un archivo data.json, o con valores de ejemplo embebidos)
-> - Mostrar:
->   - **Score general** grande (0-100) con color (verde > 80, amarillo 60-80, rojo < 60)
->   - **Checks por estándar** — cada uno con su estado (pass/fail/warn) y detalles
->   - **Violaciones** — tabla con standard, archivo, línea, mensaje
->   - **Servicios** — tarjetas mostrando cada servicio y su estado
-> - Estilo: moderno, limpio, con una sola librería (o CSS puro). No usar frameworks.
-> - Todo en un solo archivo index.html con CSS y JS embebidos
-> - Debe verse bien en desktop y mobile
->
-> Usá datos de ejemplo realistas (no vacíos) para que se vea el dashboard funcionando. Ejemplo: users-service y orders-service pasan health check, notifications-service no tiene README, hay 2 violaciones de style, score 85."
-
-### Paso 4: Conectá el validador al dashboard
-
-Prompt:
-
-> "Creá un script generate-dashboard-data.js que:
-> - Ejecute standards/validate.js contra el proyecto
-> - Serialice el resultado a JSON
-> - Lo escriba como dashboard/data.json
-> - Imprima un resumen con el score y los checks fallidos
->
-> Después el dashboard/index.html debe leer dashboard/data.json (podés embederlo en el HTML al generar, o hacer que lo lea con fetch si lo servís localmente)."
-
-### Paso 5: Probá el sistema completo
-
+4. Corré el flujo:
 ```bash
 node standards/validate.js
 node generate-dashboard-data.js
-# Abrí dashboard/index.html en el navegador
+# Abrí dashboard/index.html
 ```
-
-Si hay violaciones (seguro las hay en algún lado), corregí el código y volvé a generar. El dashboard debería reflejar la mejora.
 
 ### Criterios de completitud
 
-- [ ] standards/standards.json define estándares como código
-- [ ] standards/validate.js valida el sistema contra los estándares
+- [ ] `standards/validate.js` valida el sistema contra los estándares
 - [ ] El validador detecta al menos 3 tipos de violaciones
-- [ ] El dashboard muestra score, checks, violaciones, y servicios
-- [ ] Corriste el flujo completo: validar → generar data → abrir dashboard
+- [ ] `dashboard/index.html` muestra score, checks, violaciones y servicios
+- [ ] Corriste validar → generar data → abrir dashboard
 - [ ] Corregiste al menos una violación y el dashboard reflejó la mejora
-- [ ] Entendés cómo una persona con IA escala estándares de equipo
+
+---
+
+## 🛠️ Proyecto 3 — Prove the standards 🔴 core (el corazón del nivel)
+
+> **Descripción:** Demostrá que tu validador de estándares de verdad detecta violaciones. Un validador que nunca viste fallar te da falsa seguridad — y el estándar que tu validador no mide se degrada silenciosamente mientras el dashboard muestra verde.
+
+Los proyectos 1-2 construyen los estándares, el validador y el dashboard. Acá los **sometés a prueba**. El mismo principio del N6 (gate), N7 (event flow) y N8 (validador de infra), ahora sobre estándares de equipo.
+
+### Pasos
+
+1. **Creá un fixture de sistema roto.** Escribí un proyecto de prueba (por ejemplo en `standards/fixtures/`) que **viole deliberadamente** los estándares:
+   - Un servicio sin `index.js` (viola `services`)
+   - Un servicio sin endpoint `/health` (viola `health-check`)
+   - Una línea de más de 100 caracteres (viola `style`)
+   - Un secret hardcodeado como `const PASSWORD = "s3cr3t"` (viola `security`)
+   - Un servicio sin `README.md` (viola `docs`)
+
+2. **Escribí `standards/validate.test.js`** que pruebe, con `node --test`:
+   - Que el sistema **bueno** (el real N7/N8) pasa la validación con score alto
+   - Que el fixture **roto** baja el score y reporta las violaciones correctas
+   - Que el validador detecta **cada tipo** de violación que plantaste (services, health-check, style, security, docs)
+
+3. **Probalo.** Corré `node --test standards/validate.test.js`. Si una violación plantada no se detecta, tu validador de estándares tiene un agujero — lo acabas de encontrar antes que el equipo.
+
+4. **Rompé algo a propósito.** Si tu validador no mide un estándar que esperás, ese es el hallazgo más valioso: significa que tu estándar es teoría, no un gate.
+
+### Criterios de completitud
+
+- [ ] Creaste un fixture de sistema que viola al menos 3 estándares deliberadamente
+- [ ] `standards/validate.test.js` verifica que el sistema bueno pasa y el roto falla
+- [ ] El test confirma que el validador detecta cada tipo de violación plantada
+- [ ] Encontraste al menos un caso donde el validador NO mide algo (o confirmaste que mide todo)
+- [ ] Entendés por qué un estándar sin validador probado es teoría, no un gate
+
+> 💡 **La conclusión:** un estándar que tu validador nunca viste fallar no está siendo cumplido — está siendo ignorado. Violar el estándar a propósito es la única forma de saber si tu gate de calidad funciona. El dashboard que "siempre da 100" es sospechoso — o el equipo es perfecto, o tu validador no mide lo correcto.
+
+---
+
+## 🛠️ Proyecto 4 — Audit the standards 🟠 stretch
+
+> **Descripción:** Mirá críticamente los estándares que definiste y el validador que los aplica. Separá los estándares que se pueden probar de los que son aspiracionales.
+
+### Pasos
+
+1. **Inventariá los estándares.** Para cada estándar en `standards.json`, anotá: ¿se puede verificar automáticamente con el validador, o es aspiracional (depende del juicio humano)?
+
+2. **Cazá falsos positivos.** Un validador que reporta violaciones donde no las hay pierde credibilidad rápido. ¿El tuyo tiene falsos positivos? (por ejemplo, marcar como "secret" algo que es un placeholder).
+
+3. **Cazá falsos negativos.** ¿Hay violaciones que el validador NO detecta? (por ejemplo, un secret con otro formato, o una función grande que el regex no atrapa).
+
+4. **Agregá un estándar.** Elegí un estándar que le faltaría a tu sistema y agregalo a `standards.json` + `validate.js`. Escribí un test para él.
+
+5. **Escribí tu análisis** en `project-9-standards-audit.md`:
+   - 1 estándar que se puede probar y cómo lo verifica el validador
+   - 1 estándar aspiracional (o un falso positivo que encontraste)
+   - El estándar nuevo que agregaste
+   - Una frase: *¿por qué un estándar sin gate es teoría?*
+
+### Criterios de completitud
+
+- [ ] Inventariaste cuáles estándares se pueden probar y cuáles no
+- [ ] Encontraste al menos un falso positivo o falso negativo del validador
+- [ ] Agregaste un estándar nuevo con su test
+- [ ] Escribiste `project-9-standards-audit.md`
+- [ ] Podés explicar la diferencia entre un estándar enforceable y uno aspiracional
+
+> 💡 **La conclusión:** los estándares no valen por lo que dicen, valen por lo que el validador puede probar. Un estándar aspiracional que nadie puede medir es un deseo, no una regla.
 
 ---
 
@@ -209,11 +218,13 @@ Nivel 9 del AI Engineering Bootcamp: Multiplicador de equipo.
 Definí estándares de equipo como código (standards.json) y construí:
 - Un validador que los aplica a todo el sistema
 - Un dashboard que muestra el estado de calidad en tiempo real
+- Y probé que el validador detecta cuando alguien los viola
 
 Lo que aprendí:
 - Los estándares como código > los estándares como documentación
 - Una persona con IA puede hacer cumplir reglas que antes requerían un equipo de plataforma
 - El dashboard no es un lujo — es la verificación continua de que los estándares se cumplen
+- Un estándar que tu validador nunca vio fallar no está siendo cumplido, está siendo ignorado
 - El verdadero multiplicador de la IA no es generar código, es escalar consistencia
 
 Próximo nivel: el sistema completo — juntando todo.
@@ -230,6 +241,22 @@ Antes de pasar al Nivel 10, respondé:
 - [ ] ¿El validador aplica los estándares al sistema?
 - [ ] ¿El dashboard muestra el estado de calidad?
 - [ ] ¿Corrigiste al menos una violación y viste la mejora?
+- [ ] ¿Probaste que tu validador detecta violaciones (no solo que el sistema cumple)?
 - [ ] ¿Entendés el concepto de la IA como capa de estándares?
 
 → Si respondiste "sí" a todo, avanzá al **Nivel 10**.
+
+---
+
+## Verificación (auto-check)
+
+Corré el checklist para confirmar que completaste los proyectos:
+
+```bash
+cd projects/level-07-microservices
+node verify.js
+```
+
+`verify.js` chequea: `standards.json` (Proyecto 1), el validador y el dashboard (Proyecto 2), los fixtures de sistema roto y el test del validador (Proyecto 3, core) y el registro de auditoría de estándares (Proyecto 4, stretch). Confirma *esfuerzo*, no *calidad* — la calidad la juzgás vos contra el self-review de arriba.
+
+> Mismo template que los niveles 1-8. Confirma esfuerzo + rúbrica que guía el juicio.

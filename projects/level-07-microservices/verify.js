@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /**
- * verify.js — Level 8 auto-check
+ * verify.js — Level 9 auto-check
  *
- * Same template as Levels 1-7: confirms EFFORT (files + evidence), not quality.
- * Quality is judged by the learner against the rubric in docs/level-08-cloud.md.
+ * Same template as Levels 1-8: confirms EFFORT (files + evidence), not quality.
+ * Quality is judged by the learner against the rubric in docs/level-09-team-standards.md.
  *
- * This level extends the N7 system (ADR-001). The verify focuses on the N8
- * additions: Dockerfiles, CloudFormation template, validator, and the proof that
- * the validator catches broken templates.
+ * This level extends the N7 system (ADR-001). The verify focuses on the N9
+ * additions: standards.json, the standards validator, the dashboard, and the
+ * proof that the validator catches violations.
  *
  * Run: node verify.js
  * Exit 0 = all core checks pass. Non-zero = something is missing.
@@ -35,46 +35,40 @@ function readIf(rel) {
   }
 }
 
-console.log('\n🔍 Level 8 verification\n');
+console.log('\n🔍 Level 9 verification\n');
 
-// --- Project 1: Dockerize the system (core) ---
-check('users-service/Dockerfile exists', exists('users-service/Dockerfile'), 'create a Dockerfile for users-service');
-check('orders-service/Dockerfile exists', exists('orders-service/Dockerfile'), 'create a Dockerfile for orders-service');
-check('notifications-service/Dockerfile exists', exists('notifications-service/Dockerfile'), 'create a Dockerfile for notifications-service');
-check('docker-compose.yml exists', exists('docker-compose.yml'), 'create a docker-compose.yml for local development');
-check('docker-compose defines services', /services:/i.test(readIf('docker-compose.yml')), 'declare services in docker-compose.yml');
-
-// --- Project 2: CloudFormation template + validator (core) ---
-check('cloudformation/template.yml exists', exists('cloudformation/template.yml'), 'create a CloudFormation template');
-check('cloudformation/validate.js exists', exists('cloudformation/validate.js'), 'create a CloudFormation validator');
-const validator = readIf('cloudformation/validate.js');
-check('validator detects port-mismatch', /port-mismatch/.test(validator), 'add a port-mismatch finding to the validator');
-check('validator detects missing-health-check', /missing-health-check/.test(validator), 'add a missing-health-check finding');
-check('validator detects exposed-port', /exposed-port/.test(validator), 'add an exposed-port finding');
-check('validator detects missing-listener', /missing-listener/.test(validator), 'add a missing-listener finding');
-
-// Run the validator against the good template
-let goodTemplateOk = false;
+// --- Project 1: standards as code (core) ---
+const standards = readIf('standards/standards.json');
+check('standards/standards.json exists', !!standards, 'define team standards as code');
+let standardsObj = null;
 try {
-  execFileSync('node', [path.join(root, 'cloudformation/validate.js'), '--template', path.join(root, 'cloudformation/template.yml')], {
-    encoding: 'utf-8',
-    stdio: ['ignore', 'pipe', 'pipe'],
-  });
-  goodTemplateOk = true;
+  standardsObj = JSON.parse(standards);
 } catch {
-  goodTemplateOk = false;
+  /* invalid JSON */
 }
-check('good template passes validation', goodTemplateOk, 'fix cloudformation/template.yml until validate.js exits 0');
+check('standards.json is valid JSON', !!standardsObj, 'standards.json must parse as JSON');
+check('standards define required services', !!standardsObj && Array.isArray(standardsObj.services?.required), 'declare required services');
+check('standards define style rules', !!standardsObj && standardsObj.style?.maxLineLength > 0, 'declare style rules (maxLineLength)');
 
-// --- Project 3: Prove the validator (core) ---
-check('cloudformation/validate.test.js exists', exists('cloudformation/validate.test.js'), 'create validate.test.js to prove the validator');
-const fixtureDir = path.join(root, 'cloudformation/fixtures');
-const fixtures = fs.existsSync(fixtureDir) ? fs.readdirSync(fixtureDir).filter((f) => f.endsWith('.yml')) : [];
-check('broken fixtures exist', fixtures.length >= 4, `create at least 4 broken templates in cloudformation/fixtures/ (found ${fixtures.length})`);
+// --- Project 2: validator + dashboard (core) ---
+const validator = readIf('standards/validate.js');
+check('standards/validate.js exists', !!validator, 'create the standards validator');
+check('validator checks services', /checkServices|services/.test(validator), 'validate required services exist');
+check('validator checks health-check', /checkHealthChecks|health/.test(validator), 'validate /health endpoints');
+check('validator checks style', /checkStyle|maxLineLength/.test(validator), 'validate style rules');
+check('validator checks security', /checkSecurity|SECRET_PATTERNS|secrets/i.test(validator), 'detect hardcoded secrets');
+check('validator checks docs', /checkDocs|README/.test(validator), 'validate docs/READMEs');
+check('validator exports validate()', /module\.exports[\s\S]*validate/.test(validator), 'export validate(projectRoot, standards)');
+check('dashboard/index.html exists', exists('dashboard/index.html'), 'create the quality dashboard');
+check('generate-dashboard-data.js exists', exists('generate-dashboard-data.js'), 'create the script that feeds the dashboard');
+
+// --- Project 3: Prove the standards (core) ---
+check('standards/validate.test.js exists', exists('standards/validate.test.js'), 'create standards/validate.test.js');
+check('broken fixture exists', exists('standards/fixtures/broken/standards/standards.json'), 'create a broken system fixture that violates standards');
 
 let proveOk = false;
 try {
-  execFileSync('node', ['--test', path.join(root, 'cloudformation/validate.test.js')], {
+  execFileSync('node', ['--test', path.join(root, 'standards/validate.test.js')], {
     encoding: 'utf-8',
     stdio: ['ignore', 'pipe', 'pipe'],
   });
@@ -82,12 +76,12 @@ try {
 } catch {
   proveOk = false;
 }
-check('validator proof tests pass', proveOk, 'run node --test cloudformation/validate.test.js');
+check('standards proof tests pass', proveOk, 'run node --test standards/validate.test.js');
 
-// --- Project 4: Audit the IaC decisions (stretch) ---
-const audit = readIf('project-8-infra-audit.md');
+// --- Project 4: Audit the standards (stretch) ---
+const audit = readIf('project-9-standards-audit.md');
 if (!audit) {
-  console.log('⚠️  Project 4 (IaC decisions audit) notes not found — stretch goal, not blocking.\n');
+  console.log('⚠️  Project 4 (standards audit) notes not found — stretch goal, not blocking.\n');
 }
 
 console.log(checks.length + ' checks run, ' + (checks.length - failures.length) + ' passed, ' + failures.length + ' failed.\n');
@@ -99,4 +93,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log('✅ All core checks pass. Quality is up to you — see the self-review in docs/level-08-cloud.md.');
+console.log('✅ All core checks pass. Quality is up to you — see the self-review in docs/level-09-team-standards.md.');

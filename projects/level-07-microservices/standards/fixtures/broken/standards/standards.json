@@ -1,0 +1,28 @@
+{
+  "services": {
+    "required": ["users-service", "orders-service", "notifications-service"],
+    "healthCheckPath": "/health"
+  },
+  "commit": {
+    "format": "type(scope): description",
+    "allowedTypes": ["feat", "fix", "chore", "refactor", "docs", "test", "perf", "ci", "style"],
+    "requireScope": false
+  },
+  "style": {
+    "maxLineLength": 100,
+    "maxFunctionLines": 30,
+    "noConsoleLogInSrc": true
+  },
+  "security": {
+    "detectSecrets": true,
+    "detectInjection": true,
+    "detectVulnerableDeps": true
+  },
+  "testing": {
+    "requireTestsForNewFiles": true
+  },
+  "docs": {
+    "requireReadmePerService": true,
+    "requireApiDocPerService": true
+  }
+}
