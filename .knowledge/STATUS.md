@@ -42,9 +42,22 @@
 ## Issues conocidos
 
 - Los posts de LinkedIn de los niveles quedaron sin publicar (decisión: eran el ejercicio de reflexión, no el fin).
-- Sin mecanismo de verificación automática al final de cada nivel (tests contra el proyecto del alumno) — mejora futura.
+
+## Expansión en curso — Nivel 1 (2026-08-03)
+
+Convertir el bootcamp en una estructura de educación en línea completa, nivel por nivel. Empezando por el Nivel 1.
+
+**Nivel 1 expandido ✅** — de 2 a 4 proyectos:
+- Proyectos 1-2 (core, existentes): landing page + password generator.
+- **Proyecto 3 (nuevo, core)** — *Iteración deliberada*: reconstruir el generator con 3 estrategias de prompt (vague/specific/constrained) y comparar. Enseña el "porqué" (especificidad = habilidad, no regalo).
+- **Proyecto 4 (nuevo, stretch)** — *Modo auditor*: encontrar el bug en código generado roto antes de correrlo. Enseña "don't trust, verify".
+
+**Mecanismo de verificación ✅** — `projects/level-01-hello-world/verify.js`: script que confirma esfuerzo (estructura + evidencia), no calidad. Es el **template para niveles futuros**: misma estructura de checks por proyecto + rúbrica de auto-evaluación.
+
+**Filosofía:** agregar profundidad (el porqué) antes que cantidad (más proyectos iguales). El N1 no necesitaba más ejercicios del mismo tipo — necesitaba ejercicios que enseñen a *dirigir* y *auditar* la IA.
 
 ## Próximos pasos (si se retoma)
 
-- Considerar agregar verificación automática por nivel.
+- Aplicar el template de verificación (verify.js) a los niveles 2-10.
+- Expandir el siguiente nivel (N2 — Prompts) con la misma profundidad.
 - Posible conversión a contenido para posicionamiento (LinkedIn/tutorials).
