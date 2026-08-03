@@ -1,0 +1,13 @@
+{
+  "name": "prompt-library",
+  "version": "1.0.0",
+  "description": "Sistema de prompt library — Nivel 4 del AI Engineering Bootcamp",
+  "main": "render.js",
+  "bin": {
+    "prompt-library": "./prompt-library.js"
+  },
+  "scripts": {
+    "list": "node prompt-library.js list",
+    "render": "node prompt-library.js render"
+  }
+}

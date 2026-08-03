@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quality Dashboard — Microservices</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    h1 { font-size: 24px; font-weight: 700; }
+    .timestamp { color: #94a3b8; font-size: 13px; }
+
+    /* Score */
+    .score-card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .score-ring {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 800;
+      border: 6px solid #22c55e;
+      background: #0f172a;
+    }
+    .score-ring.green { border-color: #22c55e; color: #4ade80; }
+    .score-ring.yellow { border-color: #eab308; color: #facc15; }
+    .score-ring.red { border-color: #ef4444; color: #f87171; }
+    .score-info h2 { font-size: 18px; margin-bottom: 4px; }
+    .score-info p { color: #94a3b8; font-size: 14px; }
+
+    /* Grid de servicios */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .service-card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 16px;
+      border-left: 4px solid #22c55e;
+    }
+    .service-card.warning { border-left-color: #eab308; }
+    .service-card.fail { border-left-color: #ef4444; }
+    .service-card h3 { font-size: 16px; margin-bottom: 8px; }
+    .service-meta { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: #94a3b8; }
+    .service-meta .ok { color: #4ade80; }
+    .service-meta .bad { color: #f87171; }
+    .service-status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+    .service-status.healthy { background: #052e16; color: #4ade80; }
+    .service-status.warning { background: #422006; color: #facc15; }
+
+    /* Checks */
+    .checks-section { margin-bottom: 24px; }
+    .checks-section h2 { font-size: 18px; margin-bottom: 12px; }
+    .check-item {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .check-icon { font-size: 20px; }
+    .check-name { font-weight: 600; flex: 1; }
+    .check-status { font-size: 12px; font-weight: 600; text-transform: uppercase; }
+    .check-status.pass { color: #4ade80; }
+    .check-status.fail { color: #f87171; }
+    .check-status.warn { color: #facc15; }
+    .check-details { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+
+    /* Violaciones */
+    .violations-section h2 { font-size: 18px; margin-bottom: 12px; }
+    .violations-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #1e293b;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .violations-table th {
+      text-align: left;
+      padding: 12px;
+      background: #0f172a;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+    .violations-table td {
+      padding: 10px 12px;
+      font-size: 13px;
+      border-top: 1px solid #334155;
+    }
+    .violations-table .standard {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: #334155;
+      color: #e2e8f0;
+    }
+    .empty { color: #94a3b8; font-style: italic; padding: 16px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🛡️ Quality Dashboard</h1>
+      <span class="timestamp" id="timestamp"></span>
+    </header>
+
+    <div class="score-card">
+      <div class="score-ring" id="scoreRing">--</div>
+      <div class="score-info">
+        <h2>Score general de calidad</h2>
+        <p id="scoreDesc"></p>
+      </div>
+    </div>
+
+    <div class="services-grid" id="servicesGrid"></div>
+
+    <div class="checks-section">
+      <h2>Servicios en vivo</h2>
+      <div id="liveServices"></div>
+    </div>
+
+    <div class="checks-section">
+      <h2>Checks por estándar</h2>
+      <div id="checksList"></div>
+    </div>
+
+    <div class="violations-section">
+      <h2>Violaciones</h2>
+      <table class="violations-table">
+        <thead>
+          <tr>
+            <th>Estándar</th>
+            <th>Archivo</th>
+            <th>Línea</th>
+            <th>Mensaje</th>
+          </tr>
+        </thead>
+        <tbody id="violationsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Cargar data.json (servido localmente) o data embebida
+    fetch('data.json')
+      .then(r => r.json())
+      .then(render)
+      .catch(() => {
+        // Fallback: si no hay data.json, usar data embebida de ejemplo
+        render(window.SAMPLE_DATA || {
+          score: 85,
+          generatedAt: new Date().toISOString(),
+          checks: [
+            { name: 'services', status: 'pass', details: [] },
+            { name: 'health-check', status: 'pass', details: [] },
+            { name: 'style', status: 'warn', details: [] },
+            { name: 'security', status: 'pass', details: [] },
+            { name: 'docs', status: 'fail', details: [] },
+          ],
+          violations: [
+            { standard: 'docs', file: 'notifications-service', line: 0, message: 'Falta README.md' },
+            { standard: 'style', file: 'orders-service/index.js', line: 42, message: 'Línea de 95 caracteres (max 80)' },
+          ],
+          services: [
+            { name: 'users-service', hasIndex: true, hasHealth: true, hasReadme: true, lines: 80, status: 'healthy' },
+            { name: 'orders-service', hasIndex: true, hasHealth: true, hasReadme: false, lines: 95, status: 'warning' },
+            { name: 'notifications-service', hasIndex: true, hasHealth: false, hasReadme: false, lines: 40, status: 'warning' },
+          ],
+        });
+      });
+
+    function render(data) {
+      // Timestamp
+      document.getElementById('timestamp').textContent = 'Generado: ' + new Date(data.generatedAt).toLocaleString();
+
+      // Score
+      const ring = document.getElementById('scoreRing');
+      ring.textContent = data.score;
+      ring.className = 'score-ring ' + data.scoreLabel;
+      document.getElementById('scoreDesc').textContent = scoreLabel(data.score);
+
+      // Servicios
+      const grid = document.getElementById('servicesGrid');
+      grid.innerHTML = data.services.map(svc => `
+        <div class="service-card ${svc.status}">
+          <h3>${svc.name}</h3>
+          <div class="service-meta">
+            <span class="${svc.hasIndex ? 'ok' : 'bad'}">${svc.hasIndex ? '✓' : '✗'} index.js (${svc.lines} líneas)</span>
+            <span class="${svc.hasHealth ? 'ok' : 'bad'}">${svc.hasHealth ? '✓' : '✗'} health check</span>
+            <span class="${svc.hasReadme ? 'ok' : 'bad'}">${svc.hasReadme ? '✓' : '✗'} README</span>
+          </div>
+          <span class="service-status ${svc.status}">${svc.status}</span>
+        </div>
+      `).join('');
+
+      // Servicios en vivo (estado del gateway)
+      loadLiveServices(data);
+
+      // Checks
+      const checksList = document.getElementById('checksList');
+      checksList.innerHTML = data.checks.map(c => {
+        const icon = c.status === 'pass' ? '✅' : c.status === 'warn' ? '⚠️' : '❌';
+        const details = c.details && c.details.length > 0
+          ? `<div class="check-details">${c.details.slice(0, 3).map(d => d.message).join('<br>')}${c.details.length > 3 ? `<br>+${c.details.length - 3} más` : ''}</div>`
+          : '';
+        return `
+          <div class="check-item">
+            <span class="check-icon">${icon}</span>
+            <span class="check-name">${c.name}</span>
+            <span class="check-status ${c.status}">${c.status}</span>
+            ${details}
+          </div>
+        `;
+      }).join('');
+
+      // Violaciones
+      const body = document.getElementById('violationsBody');
+      if (data.violations.length === 0) {
+        body.innerHTML = '<tr><td colspan="4" class="empty">🎉 No hay violaciones.</td></tr>';
+      } else {
+        body.innerHTML = data.violations.map(v => `
+          <tr>
+            <td><span class="standard">${v.standard}</span></td>
+            <td>${v.file}</td>
+            <td>${v.line || '—'}</td>
+            <td>${v.message}</td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    function scoreLabel(score) {
+      if (score >= 80) return 'Excelente — el sistema cumple los estándares.';
+      if (score >= 60) return 'Aceptable — hay violaciones que corregir.';
+      return 'Crítico — el sistema no cumple los estándares.';
+    }
+
+    // Cargar servicios en vivo desde el gateway (si está corriendo)
+    function loadLiveServices(data) {
+      const container = document.getElementById('liveServices');
+
+      fetch('http://localhost:8080/health')
+        .then(r => r.json())
+        .then(health => {
+          const services = health.services;
+          const entries = Object.entries(services).map(([name, status]) => {
+            const icon = status === 'ok' ? '✅' : status === 'degraded' ? '⚠️' : '❌';
+            const cls = status === 'ok' ? 'pass' : 'fail';
+            return `<div class="check-item"><span class="check-icon">${icon}</span><span class="check-name">${name}</span><span class="check-status ${cls}">${status}</span></div>`;
+          }).join('');
+
+          container.innerHTML = entries + `<div class="check-item"><span class="check-icon">🚪</span><span class="check-name">gateway</span><span class="check-status pass">${health.gateway}</span></div>`;
+        })
+        .catch(() => {
+          // Fallback: gateway no está corriendo
+          const svcNames = ['auth', 'users', 'orders', 'notifications', 'gateway'];
+          container.innerHTML = `<div class="check-item"><span class="check-icon">⚪</span><span class="check-name">Sistema en vivo</span><span class="check-status warn">Gateway no detectado (levantá con npm run dev)</span></div>`;
+          void data;
+        });
+    }
+  </script>
+</body>
+</html>

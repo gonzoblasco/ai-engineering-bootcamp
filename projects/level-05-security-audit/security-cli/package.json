@@ -1,0 +1,12 @@
+{
+  "name": "security-audit",
+  "version": "1.0.0",
+  "description": "Security Audit CLI — Nivel 5 del AI Engineering Bootcamp",
+  "main": "security-audit.js",
+  "bin": {
+    "security-audit": "./security-audit.js"
+  },
+  "scripts": {
+    "start": "node security-audit.js"
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "generatedAt": "2026-08-03T18:59:32.704Z",
+  "project": "level-07-microservices",
+  "score": 100,
+  "scoreLabel": "green",
+  "checks": [
+    {
+      "name": "services",
+      "status": "pass",
+      "details": [
+        {
+          "service": "users-service",
+          "exists": true,
+          "status": "pass",
+          "message": "✓ users-service existe"
+        },
+        {
+          "service": "orders-service",
+          "exists": true,
+          "status": "pass",
+          "message": "✓ orders-service existe"
+        },
+        {
+          "service": "notifications-service",
+          "exists": true,
+          "status": "pass",
+          "message": "✓ notifications-service existe"
+        }
+      ]
+    },
+    {
+      "name": "health-check",
+      "status": "pass",
+      "details": [
+        {
+          "service": "users-service",
+          "hasHealth": true,
+          "status": "pass",
+          "message": "✓ users-service tiene /health"
+        },
+        {
+          "service": "orders-service",
+          "hasHealth": true,
+          "status": "pass",
+          "message": "✓ orders-service tiene /health"
+        }
+      ]
+    },
+    {
+      "name": "style",
+      "status": "pass",
+      "details": [
+        {
+          "status": "pass",
+          "message": "✓ No hay violaciones de estilo"
+        }
+      ]
+    },
+    {
+      "name": "security",
+      "status": "pass",
+      "details": [
+        {
+          "status": "pass",
+          "message": "✓ No se detectaron secrets"
+        }
+      ]
+    },
+    {
+      "name": "docs",
+      "status": "pass",
+      "details": [
+        {
+          "service": "users-service",
+          "hasReadme": true,
+          "status": "pass",
+          "message": "✓ users-service/README.md existe"
+        },
+        {
+          "service": "orders-service",
+          "hasReadme": true,
+          "status": "pass",
+          "message": "✓ orders-service/README.md existe"
+        },
+        {
+          "service": "notifications-service",
+          "hasReadme": true,
+          "status": "pass",
+          "message": "✓ notifications-service/README.md existe"
+        }
+      ]
+    }
+  ],
+  "violations": [],
+  "services": [
+    {
+      "name": "users-service",
+      "hasIndex": true,
+      "hasHealth": true,
+      "hasReadme": true,
+      "lines": 88,
+      "status": "healthy"
+    },
+    {
+      "name": "orders-service",
+      "hasIndex": true,
+      "hasHealth": true,
+      "hasReadme": true,
+      "lines": 101,
+      "status": "healthy"
+    },
+    {
+      "name": "notifications-service",
+      "hasIndex": true,
+      "hasHealth": false,
+      "hasReadme": true,
+      "lines": 38,
+      "status": "warning"
+    }
+  ]
+}

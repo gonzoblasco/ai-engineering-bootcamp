@@ -1,0 +1,15 @@
+{
+  "name": "level-07-microservices",
+  "version": "1.0.0",
+  "description": "Sistema completo de microservicios — AI Engineering Bootcamp",
+  "scripts": {
+    "dev": "node index.js",
+    "start": "node index.js",
+    "standards": "node standards/validate.js",
+    "dashboard": "node generate-dashboard-data.js",
+    "release-notes": "node scripts/generate-release-notes.js"
+  },
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}

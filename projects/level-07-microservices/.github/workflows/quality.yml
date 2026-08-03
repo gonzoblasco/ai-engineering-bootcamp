@@ -1,0 +1,73 @@
+name: Quality Standards
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate-standards:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Validate standards
+        id: validate
+        run: |
+          node standards/validate.js > /tmp/standards-output.txt 2>&1
+          SCORE=$(node -e "const {validate,loadStandards}=require('./standards/validate');const r=validate(process.cwd(),loadStandards(process.cwd()));console.log(r.score)")
+          echo "score=$SCORE" >> $GITHUB_OUTPUT
+          cat /tmp/standards-output.txt
+
+      - name: Post comment with score
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const score = parseInt(`${{ steps.validate.outputs.score }}`);
+
+            // Buscar comentario existente del bot
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(c =>
+              c.user.type === 'Bot' && c.body.includes('Quality Standards')
+            );
+
+            const icon = score >= 80 ? '✅' : '❌';
+            const body = `## 🤖 Quality Standards\n\n${icon} **Score: ${score}/100**\n\n${score >= 80 ? 'Los estándares de equipo se cumplen.' : 'El score está por debajo de 80. Revisar las violaciones antes de mergear.'}\n\n*Generado por AI Engineering Bootcamp N10*`;
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+
+      - name: Fail if score < 80
+        if: steps.validate.outputs.score < 80
+        run: |
+          echo "❌ Score por debajo de 80: ${{ steps.validate.outputs.score }}"
+          exit 1

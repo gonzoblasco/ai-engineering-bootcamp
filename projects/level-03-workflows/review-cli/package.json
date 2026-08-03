@@ -1,0 +1,12 @@
+{
+  "name": "review-cli",
+  "version": "1.0.0",
+  "description": "CLI de code review — Nivel 3 del AI Engineering Bootcamp",
+  "main": "index.js",
+  "bin": {
+    "review-cli": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

@@ -33,16 +33,18 @@ Cada nivel tiene:
 
 | Nivel | Estado |
 |-------|--------|
-| 1 — Hello World | ⬜ Pendiente |
-| 2 — Prompts | ⬜ Pendiente |
-| 3 — Workflows | ⬜ Pendiente |
-| 4 — Prompt Library | ⬜ Pendiente |
-| 5 — Seguridad | ⬜ Pendiente |
-| 6 — CI/CD | ⬜ Pendiente |
-| 7 — Microservicios | ⬜ Pendiente |
-| 8 — Producción | ⬜ Pendiente |
-| 9 — Multiplicador | ⬜ Pendiente |
-| 10 — Sistema completo | ⬜ Pendiente |
+| 1 — Hello World | ✅ Completado |
+| 2 — Prompts | ✅ Completado |
+| 3 — Workflows | ✅ Completado |
+| 4 — Prompt Library | ✅ Completado |
+| 5 — Seguridad | ✅ Completado |
+| 6 — CI/CD | ✅ Completado |
+| 7 — Microservicios | ✅ Completado |
+| 8 — Producción | ✅ Completado |
+| 9 — Multiplicador | ✅ Completado |
+| 10 — Sistema completo | ✅ Completado |
+
+## 🎉 Curso completo — 10/10 niveles
 
 ## Stack
 
