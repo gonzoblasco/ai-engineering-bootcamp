@@ -86,6 +86,25 @@ Convertir el bootcamp en una estructura de educación en línea completa, nivel 
 
 **Filosofía:** misma — profundidad antes que cantidad. El N5 ya tenía el "porqué" en la teoría; le faltaba el lado *ofensivo* (explotar) y el *problemático* (falsos positivos).
 
+## Batch de materialización — Proyectos de ejemplo completos (2026-08-03)
+
+Se materializaron los artefactos estructurales que las guías expandidas referencian, para que las carpetas de proyecto reflejen los docs y corran de punta a punta (el "contrato" del curso):
+
+- **N1** — `password-generator/` (HTML+CSS+JS) agregado.
+- **N2** — `tasks-api/tasks.test.js` (8 tests, zero-deps, `node --test`) + `index.js` exporta `app` (testable) + `02-refactor-legacy/app.js` (app desordenada para refactorizar).
+- **N3** — `workflow/` CLI (pre-flight + gates + report) con lógica extraída a `workflow/gates.js` testeable + `gates.test.js` (12 tests).
+- **N4** — `review-code.prompt.md` actualizado (severidades BLOCKING/WARNING/SUGGESTION + variable `{{rules}}`) + `refactor-code.prompt.md` nuevo (4 patrones + restricción de comportamiento).
+- **N5** — `vulnerable-app.js` (app deliberadamente vulnerable) + `exploit.js` (demuestra SQLi + secret leak) + `package.json` (express).
+
+**Verificación:** los verify.js de N1-N5 confirman el esfuerzo. **N3 (11/11) y N5 (9/9) pasan completos.** Los checks que quedan "missing" en N1/N2/N4 son **solo las notas de reflexión del alumno** (project-N-notes.md) — intencional, el repo de ejemplo no resuelve el trabajo de escritura del estudiante.
+
+**Bugs de verify.js corregidos en el proceso:**
+- Rutas absolutas de `walk`/`findFiles` leídas con `readIf` (relativo) → leían vacío. Se lee con `readFileSync` directo.
+- Regex de extensión con doble backslash (`\\.`) en N3 → no matcheaba archivos.
+- N2: `testFiles` eran solo nombres de archivo sin carpeta → `readIf` no encontraba los tests.
+- N4: `find('review')` atrapaba `roles/code-reviewer` en vez de `workflows/review-code`.
+- Lección (para skills/futuros verify): **un regex de extensión en un literal va con un solo backslash, y los paths que devuelve walk/findFiles son absolutos — no pasar por readIf(relativo).**
+
 ## Próximos pasos (si se retoma)
 
 - Aplicar el template de verificación (verify.js) a los niveles 6-10.
