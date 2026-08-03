@@ -133,20 +133,39 @@ if (!listenerMatch) {
 
 // 4. Security groups expuestos
 // ServiceSecurityGroup abre 3001 y 3002 a 0.0.0.0/0 — eso es un problema (debería ser solo desde el ALB)
-const serviceSG = content.match(/ServiceSecurityGroup[\s\S]*?SecurityGroupIngress:([\s\S]*?)(?=^\S|$)/m);
-if (serviceSG) {
-  const sgBody = serviceSG[1];
-  const fromPorts = [...sgBody.matchAll(/FromPort:\s*(\d+)/g)].map((m) => parseInt(m[1], 10));
-  const allOpen = [...sgBody.matchAll(/CidrIp:\s*([\d.]+\/\d+)/g)].map((m) => m[1]);
+// Nota: extraemos el bloque por indentación en vez de regex con lookahead, que es frágil
+// cuando el SecurityGroupIngress está al final del archivo.
+function extractResourceBlock(yaml, resourceName) {
+  const lines = yaml.split('\n');
+  const start = lines.findIndex((l) => l.trim().startsWith(`${resourceName}:`));
+  if (start === -1) return [];
+  const startIndent = lines[start].match(/^\s*/)[0].length;
+  const result = [lines[start]];
+  for (let i = start + 1; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.trim() === '') continue;
+    const indent = line.match(/^\s*/)[0].length;
+    if (indent <= startIndent) break;
+    result.push(line);
+  }
+  return result;
+}
 
-  for (const port of fromPorts) {
-    if (allOpen.every((cidr) => cidr === '0.0.0.0/0')) {
-      findings.push({
-        type: 'exposed-port',
-        severity: 'high',
-        message: `ServiceSecurityGroup expone puerto ${port} a 0.0.0.0/0 — debería restringirse al ALB`,
-      });
-    }
+const serviceSGLines = extractResourceBlock(content, 'ServiceSecurityGroup');
+const sgBody = serviceSGLines.join('\n');
+const fromPorts = [...sgBody.matchAll(/FromPort:\s*(\d+)/g)].map((m) => parseInt(m[1], 10));
+const allOpen = [...sgBody.matchAll(/CidrIp:\s*([\d.]+\/\d+)/g)].map((m) => m[1]);
+
+// Solo reportar si HAY al menos un CidrIp y todos son 0.0.0.0/0.
+// (Si usa SourceSecurityGroupId, allOpen queda vacío y NO es un puerto expuesto.)
+const exposed = allOpen.length > 0 && allOpen.every((cidr) => cidr === '0.0.0.0/0');
+for (const port of fromPorts) {
+  if (exposed) {
+    findings.push({
+      type: 'exposed-port',
+      severity: 'high',
+      message: `ServiceSecurityGroup expone puerto ${port} a 0.0.0.0/0 — debería restringirse al ALB`,
+    });
   }
 }
 
@@ -179,7 +198,7 @@ if (sorted.length === 0) {
 }
 
 for (const f of sorted) {
-  console.log(`${icon(f.severity)} [${f.severity.toUpperCase()}] ${f.message}`);
+  console.log(`${icon(f.severity)} [${f.severity.toUpperCase()}] [${f.type}] ${f.message}`);
 }
 
 console.log(`\nResumen: ${criticalCount} críticos, ${highCount} altos, ${mediumCount} medios`);

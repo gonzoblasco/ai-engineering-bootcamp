@@ -131,8 +131,21 @@ Se materializaron los artefactos estructurales que las guías expandidas referen
 
 **Filosofía:** misma — profundidad antes que cantidad. El N7 no necesitaba más servicios; necesitaba *probar* que los eventos fluyen, que un handler roto no tumba el bus, y que los payloads cumplen el contrato. Los eventos son una API asíncrona — un contrato que nadie chequea se rompe en runtime, silenciosamente.
 
+## Nivel 8 expandido ✅ (2026-08-03) — Producción y cloud
+
+**Nivel 8 expandido** — de 1 proyecto grande (8 pasos) a 4 proyectos, manteniendo la profundidad original:
+- Proyectos 1-2 (core, existentes): Dockerizar el sistema (Dockerfiles + docker-compose) + generar CloudFormation template + validador cruzado. El `cloudformation/template.yml` y `validate.js` ya existían materializados de niveles previos.
+- **Proyecto 3 (nuevo, core, el corazón)** — *Prove the validator*: `cloudformation/fixtures/` con templates deliberadamente rotos (port-mismatch, missing-health-check, missing-listener, exposed-port) y `cloudformation/validate.test.js` que confirma que el validador detecta cada tipo de defecto. El template bueno debe seguir pasando. Enseña que "un validador de infraestructura que nunca viste fallar no te protege de nada".
+- **Proyecto 4 (nuevo, stretch)** — *Audit the IaC decisions*: separar qué decisiones de infraestructura son humanas (AZs, sizing, seguridad) y cuáles la IA puede traducir, cuestionar los defaults de la IA, escribir `project-8-infra-audit.md`.
+
+**Materialización:** agregados 4 fixtures de templates rotos, `cloudformation/validate.test.js` (5 tests). Se encontró y corrigió un bug real en `validate.js`: el check de `exposed-port` usaba un regex con lookahead `(?=...\$)` con flag `/m`, lo que hacía que `$` matcheara al final de cada línea y capturara el cuerpo del security group vacío → falso negativo de seguridad. Se reemplazó por extracción del bloque por indentación, más robusta. También se corrigió un falso positivo: cuando `ServiceSecurityGroup` usa `SourceSecurityGroupId` (lo correcto), el array de CidrIp queda vacío y `[].every()` daba `true`; ahora requiere `allOpen.length > 0`.
+
+**Verificación:** verify.js del N8 creado (mismo template, adaptado: Dockerfiles + CloudFormation + proof del validador). **Pasa 15/15** (stretch no-bloqueante). Se probó de verdad: el fixture `exposed-port.yml` es detectado, el template bueno pasa limpio, y `validate.test.js` pasa 5/5.
+
+**Filosofía:** misma — profundidad antes que cantidad. El N8 no necesitaba más templates de cloud; necesitaba *probar* que el validador de infra detecta los errores que bloquearían un deploy. La infra con IA no es "copiar y pegar un template" — es generar rápido y validar duro.
+
 ## Próximos pasos (si se retoma)
 
-- Expandir el siguiente nivel (N8 — cloud/producción) con la misma profundidad.
-- Aplicar el template de verificación (verify.js) a los niveles 8-10.
+- Expandir el siguiente nivel (N9 — estándares de equipo) con la misma profundidad.
+- Aplicar el template de verificación (verify.js) a los niveles 9-10.
 - Posible conversión a contenido para posicionamiento (LinkedIn/tutorials).

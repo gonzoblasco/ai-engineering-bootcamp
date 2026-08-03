@@ -61,6 +61,15 @@ node verify.js                   # auto-check (15 checks)
 - `docker-compose.yml` — orquestación local con healthchecks
 - `cloudformation/template.yml` — CloudFormation template para AWS (VPC + ECS + ALB)
 - `cloudformation/validate.js` — validador cruzado de infraestructura
+- `cloudformation/fixtures/*.yml` — templates deliberadamente rotos para probar el validador
+- `cloudformation/validate.test.js` — prueba de fuego: confirma que el validador detecta templates rotos
+- `verify.js` — auto-check del nivel 8 (Dockerfiles + CloudFormation + proof del validador)
+
+```bash
+node cloudformation/validate.js --template cloudformation/template.yml   # valida tu infra
+node --test cloudformation/validate.test.js                              # el validador detecta templates rotos
+node verify.js                                                           # auto-check del nivel 8 (15 checks)
+```
 
 ### Nivel 9 — Estándares y dashboard (archivos agregados)
 

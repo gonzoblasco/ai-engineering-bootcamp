@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /**
- * verify.js — Level 7 auto-check
+ * verify.js — Level 8 auto-check
  *
- * Same template as Levels 1-6: confirms EFFORT (files + evidence), not quality.
- * Quality is judged by the learner against the rubric in the level doc.
+ * Same template as Levels 1-7: confirms EFFORT (files + evidence), not quality.
+ * Quality is judged by the learner against the rubric in docs/level-08-cloud.md.
  *
- * This is the physical core level for N7-N10 (ADR-001), so this verify focuses
- * on the N7 projects (services + event bus + contract + flow test). The N8-N10
- * additions (docker, cloud, standards, gateway) are covered by their own docs.
+ * This level extends the N7 system (ADR-001). The verify focuses on the N8
+ * additions: Dockerfiles, CloudFormation template, validator, and the proof that
+ * the validator catches broken templates.
  *
  * Run: node verify.js
  * Exit 0 = all core checks pass. Non-zero = something is missing.
@@ -35,51 +35,59 @@ function readIf(rel) {
   }
 }
 
-console.log('\n🔍 Level 7 verification\n');
+console.log('\n🔍 Level 8 verification\n');
 
-// --- Project 1: two-service system (core) ---
-const bus = readIf('event-bus/index.js');
-const usersSvc = readIf('users-service/index.js');
-const notifSvc = readIf('notifications-service/index.js');
-check('event-bus/index.js exists', !!bus, 'create the event bus');
-check('event bus isolates failures (_safeCall)', /_safeCall|try|catch/i.test(bus), 'wrap handlers so a failure does not break the bus');
-check('users-service/index.js exists', !!usersSvc, 'create the users service');
-check('users service publishes user.created', /publish\('user\.created'|publish\(\"user\.created\"/i.test(usersSvc), 'publish user.created when a user is created');
-check('notifications-service/index.js exists', !!notifSvc, 'create the notifications service');
-check('notifications subscribes to user.created', /subscribe\('user\.created'|subscribe\(\"user\.created\"/i.test(notifSvc), 'subscribe to user.created to send the welcome email');
+// --- Project 1: Dockerize the system (core) ---
+check('users-service/Dockerfile exists', exists('users-service/Dockerfile'), 'create a Dockerfile for users-service');
+check('orders-service/Dockerfile exists', exists('orders-service/Dockerfile'), 'create a Dockerfile for orders-service');
+check('notifications-service/Dockerfile exists', exists('notifications-service/Dockerfile'), 'create a Dockerfile for notifications-service');
+check('docker-compose.yml exists', exists('docker-compose.yml'), 'create a docker-compose.yml for local development');
+check('docker-compose defines services', /services:/i.test(readIf('docker-compose.yml')), 'declare services in docker-compose.yml');
 
-// --- Project 2: event-driven architecture (core) ---
-const ordersSvc = readIf('orders-service/index.js');
-check('orders-service/index.js exists', !!ordersSvc, 'create the orders service');
-check('orders service publishes order.created', /publish\('order\.created'|publish\(\"order\.created\"/i.test(ordersSvc), 'publish order.created when an order is created');
-check('orders reacts to user.deleted', /subscribe\('user\.deleted'|subscribe\(\"user\.deleted\"/i.test(ordersSvc), 'cancel orders when a user is deleted (event-driven)');
+// --- Project 2: CloudFormation template + validator (core) ---
+check('cloudformation/template.yml exists', exists('cloudformation/template.yml'), 'create a CloudFormation template');
+check('cloudformation/validate.js exists', exists('cloudformation/validate.js'), 'create a CloudFormation validator');
+const validator = readIf('cloudformation/validate.js');
+check('validator detects port-mismatch', /port-mismatch/.test(validator), 'add a port-mismatch finding to the validator');
+check('validator detects missing-health-check', /missing-health-check/.test(validator), 'add a missing-health-check finding');
+check('validator detects exposed-port', /exposed-port/.test(validator), 'add an exposed-port finding');
+check('validator detects missing-listener', /missing-listener/.test(validator), 'add a missing-listener finding');
 
-// --- Project 3: Prove the event flow (core) ---
-const contract = readIf('event-contract.js');
-const flowTest = readIf('event-flow.test.js');
-check('event-contract.js exists', !!contract, 'declare the event contract as code');
-check('contract lists required fields', /required|CONTRACT/i.test(contract), 'declare required payload fields per event');
-check('event-flow.test.js exists', !!flowTest, 'create event-flow.test.js');
-check('flow test checks delivery', /subscriber|received|deliver/i.test(flowTest), 'test that every subscriber receives the event');
-check('flow test checks failure isolation', /throw|doesNotThrow|fail/i.test(flowTest), 'test that a throwing handler does not break the bus');
-
-// Actually run the flow test (the proof, not just the files)
-let flowOk = false;
+// Run the validator against the good template
+let goodTemplateOk = false;
 try {
-  execFileSync('node', ['--test', path.join(root, 'event-flow.test.js')], {
+  execFileSync('node', [path.join(root, 'cloudformation/validate.js'), '--template', path.join(root, 'cloudformation/template.yml')], {
     encoding: 'utf-8',
     stdio: ['ignore', 'pipe', 'pipe'],
   });
-  flowOk = true;
+  goodTemplateOk = true;
 } catch {
-  flowOk = false;
+  goodTemplateOk = false;
 }
-check('event flow tests pass', flowOk, 'run node --test event-flow.test.js; delivery, isolation and contract must pass');
+check('good template passes validation', goodTemplateOk, 'fix cloudformation/template.yml until validate.js exits 0');
 
-// --- Project 4: Audit the boundaries (stretch) ---
-const audit = readIf('project-7-boundary-audit.md');
+// --- Project 3: Prove the validator (core) ---
+check('cloudformation/validate.test.js exists', exists('cloudformation/validate.test.js'), 'create validate.test.js to prove the validator');
+const fixtureDir = path.join(root, 'cloudformation/fixtures');
+const fixtures = fs.existsSync(fixtureDir) ? fs.readdirSync(fixtureDir).filter((f) => f.endsWith('.yml')) : [];
+check('broken fixtures exist', fixtures.length >= 4, `create at least 4 broken templates in cloudformation/fixtures/ (found ${fixtures.length})`);
+
+let proveOk = false;
+try {
+  execFileSync('node', ['--test', path.join(root, 'cloudformation/validate.test.js')], {
+    encoding: 'utf-8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  proveOk = true;
+} catch {
+  proveOk = false;
+}
+check('validator proof tests pass', proveOk, 'run node --test cloudformation/validate.test.js');
+
+// --- Project 4: Audit the IaC decisions (stretch) ---
+const audit = readIf('project-8-infra-audit.md');
 if (!audit) {
-  console.log('⚠️  Project 4 (boundary audit) notes not found — stretch goal, not blocking.');
+  console.log('⚠️  Project 4 (IaC decisions audit) notes not found — stretch goal, not blocking.\n');
 }
 
 console.log(checks.length + ' checks run, ' + (checks.length - failures.length) + ' passed, ' + failures.length + ' failed.\n');
@@ -91,4 +99,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log('✅ All core checks pass. Quality is up to you — see the self-review in docs/level-07-microservices.md.');
+console.log('✅ All core checks pass. Quality is up to you — see the self-review in docs/level-08-cloud.md.');
