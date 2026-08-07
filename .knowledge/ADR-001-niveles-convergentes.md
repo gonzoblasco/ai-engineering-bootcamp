@@ -16,6 +16,12 @@ Los niveles 8-10 son convergentes: no crean carpetas nuevas, extienden sistemas 
 
 La señal de alerta no es "¿lo sé hacer?" sino "¿es este caso realmente igual a los que ya resolví?".
 
+## Migracion
+
+Migrado a ADR global: [`docs/adr/ADR-001-patron-convergente.md`](../../../docs/adr/ADR-001-patron-convergente.md)
+
+---
+
 ## Consecuencias
 - N9 (multiplicador de equipo) y N10 (sistema completo) **confirmaron la predicción**: ambos extendieron el N7 (standards + dashboard, y luego auth + gateway + CI/CD). El patrón convergente se validó.
 - Antes de crear cualquier carpeta/estructura nueva, preguntar si el nivel construye algo nuevo o transforma lo existente.
